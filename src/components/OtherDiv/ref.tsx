@@ -34,11 +34,11 @@ const Refer: React.FC<ReferProps> = ({ userId }) => {
       </button>
       <p className="reflink">Your invite link:</p>
       <p className="refinvite">{inviteLink}</p>
-      {referredCount !== null ? (
-        <p className="refcount">Users referred: {referredCount}</p>
+      {/* {referredCount !== null ? (
+        // <p className="refcount">Users referred: {referredCount}</p>
       ) : (
-        <p className="refcount">Loading referred users count...</p>
-      )}
+        // <p className="refcount">Loading referred users count...</p>
+      )} */}
     </div>
   );
 };

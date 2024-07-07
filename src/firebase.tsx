@@ -3,17 +3,15 @@ import { getAnalytics } from "firebase/analytics";
 import { getDatabase } from "firebase/database"; // Import the Realtime Database
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCjkDIPRX28Qaa8q8bp26g8xshBihZy1SY",
-  authDomain: "bitbrawlofficial-f7a38.firebaseapp.com",
-  databaseURL:
-    "https://bitbrawlofficial-f7a38-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "bitbrawlofficial-f7a38",
-  storageBucket: "bitbrawlofficial-f7a38.appspot.com",
-  messagingSenderId: "806427531487",
-  appId: "1:806427531487:web:673c23533845dac351f16a",
-  measurementId: "G-N1T0Y2B4KK",
+  apiKey: "AIzaSyAei2Enk5qD6cBtosYB66qQwzmUHzrEW1w",
+  authDomain: "bitbrawl-official-airdrop.firebaseapp.com",
+  databaseURL: "https://bitbrawl-official-airdrop-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "bitbrawl-official-airdrop",
+  storageBucket: "bitbrawl-official-airdrop.appspot.com",
+  messagingSenderId: "179762649507",
+  appId: "1:179762649507:web:fe42f84b205d2c0bca2216",
+  measurementId: "G-SVKSDKEN7M"
 };
-
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
 const analytics = getAnalytics(firebaseApp); // Pass the initialized app to getAnalytics

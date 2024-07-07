@@ -481,10 +481,10 @@ export function App() {
             <h2>Follow Our Social And Get More Coin </h2>
             <div className="col-sm col-md-6 col-lg-4">
               <Task
-                name="Follow on Telegram"
+                name="Join our Telegram"
                 reward={500}
                 show="500"
-                link="https://telegram.me"
+                link="https://t.me/bitbrawlofficial"
                 balanceRef={balanceRef}
                 onRewardClaimed={handleRewardClaimed}
               />
@@ -494,7 +494,7 @@ export function App() {
                 name="Follow on X"
                 reward={300}
                 show="300"
-                link="https://telegram.me"
+                link="https://x.com/BBrawlofficial?t=PnQCk_xj-eXuL__mlBeAqw&s=09"
                 balanceRef={balanceRef}
                 onRewardClaimed={handleRewardClaimed}
               />
@@ -504,7 +504,7 @@ export function App() {
                 name="Subscribe on youtube"
                 reward={300}
                 show="300"
-                link="https://telegram.me"
+                link="https://www.youtube.com/channel/UCuxVXiK-eQc9zh88F3aFz1A"
                 balanceRef={balanceRef}
                 onRewardClaimed={handleRewardClaimed}
               />
@@ -514,7 +514,7 @@ export function App() {
                 name="Follow on Facebook"
                 reward={300}
                 show="300"
-                link="https://telegram.me"
+                link="https://www.facebook.com/profile.php?id=61562162609258&mibextid=JRoKGi"
                 balanceRef={balanceRef}
                 onRewardClaimed={handleRewardClaimed}
               />
@@ -524,7 +524,7 @@ export function App() {
                 name="Tweet on X"
                 reward={300}
                 show="300"
-                link="https://telegram.me"
+                link="https://twitter.com/BBrawlofficial/status/1809998267352269088?t=Ly7Tmfo5FSJHHVFPka5XXw&s=19"
                 balanceRef={balanceRef}
                 onRewardClaimed={handleRewardClaimed}
               />
@@ -534,7 +534,7 @@ export function App() {
                 name="Watch youtube video"
                 reward={300}
                 show="300"
-                link="https://telegram.me"
+                link="https://youtu.be/2of5jslUe3c"
                 balanceRef={balanceRef}
                 onRewardClaimed={handleRewardClaimed}
               />
