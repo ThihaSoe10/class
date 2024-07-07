@@ -19,8 +19,8 @@ const Refer: React.FC<ReferProps> = ({ userId }) => {
     fetchReferredUsersCount();
   }, [userId]);
 
-  const inviteLink = `https://t.me/test12er69_bot?start=${userId}`;
-  const shareLink = `https://t.me/share/url?url=https://t.me/test12er69_bot?start=${userId}`;
+  const inviteLink = `https://t.me/bitbrawlofficial_bot?start=${userId}`;
+  const shareLink = `https://t.me/share/url?url=https://t.me/bitbrawlofficial_bot?start=${userId}`;
 
   const handleInviteClick = () => {
     window.Telegram.WebApp.openLink(shareLink);
