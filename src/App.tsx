@@ -541,7 +541,9 @@ export function App() {
             </div>
           </div>
           {/* 4th row for Ref */}
-          <div className="Ref_box">{userId && <Refer userId={userId} />}</div>
+          <div className="Ref_box">
+            {userId && <Refer userId={userId} balanceRef={balanceRef} onRewardClaimed={handleRewardClaimed}/>}
+          </div>
           {/*down are overlay and container  */}
         </div>
       </div>
