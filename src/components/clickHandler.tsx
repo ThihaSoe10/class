@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 import React, { useState, useEffect } from "react";
 import logo from "../assets/click.png";
+=======
+import React, { useState, useEffect, useRef } from "react";
+import logo from "../assets/ClickerLogo.png";
+>>>>>>> 114c7d7ff57ce843422b1448a90e150befab91af
 
 export function ClickHandler(props: {
   balanceRef: React.MutableRefObject<{ value: number }>;
@@ -10,29 +15,41 @@ export function ClickHandler(props: {
 }) {
   const [texts, setTexts] = useState<
     Array<{
+<<<<<<< HEAD
+=======
+      id: number;
+>>>>>>> 114c7d7ff57ce843422b1448a90e150befab91af
       value: string;
       position: { x: number; y: number };
       opacity: number;
     }>
   >([]);
+  const textIdRef = useRef(0); // To keep track of unique IDs for each text
 
-  //const maxEnergy = 100;
-
-  const fadeOutText = (index: number) => {
+  const fadeOutText = (id: number) => {
     setTexts((prevTexts) =>
-      prevTexts.map((text, i) => (i === index ? { ...text, opacity: 0 } : text))
+      prevTexts.map((text) => (text.id === id ? { ...text, opacity: 0 } : text))
     );
   };
 
   const handleClickText = (event: React.MouseEvent<HTMLImageElement>) => {
     const { clientX, clientY } = event;
     const newText = {
+<<<<<<< HEAD
+=======
+      id: textIdRef.current++,
+>>>>>>> 114c7d7ff57ce843422b1448a90e150befab91af
       value: `+${props.increment}`,
       position: { x: clientX, y: clientY },
       opacity: 1,
     };
 
     setTexts((prevTexts) => [...prevTexts, newText]);
+
+    // Start the fade-out process for the new text
+    setTimeout(() => {
+      fadeOutText(newText.id);
+    }, 500);
   };
 
   function handleClick() {
@@ -45,7 +62,6 @@ export function ClickHandler(props: {
   }
 
   useEffect(() => {
-    // Simulate the floating effect using setInterval
     const intervalId = setInterval(() => {
       setTexts((prevTexts) =>
         prevTexts.map((text) => ({
@@ -55,21 +71,19 @@ export function ClickHandler(props: {
       );
     }, 10);
 
-    // Clear the interval after a short duration
-    setTimeout(() => {
-      clearInterval(intervalId);
-    }, 500);
-
-    // Fade out the last text after it's added
-    if (texts.length > 0) {
-      const lastTextIndex = texts.length - 1;
-      setTimeout(() => {
-        fadeOutText(lastTextIndex);
-      }, 1000);
-    }
-
     // Clean up the interval on component unmount
     return () => clearInterval(intervalId);
+  }, []);
+
+  useEffect(() => {
+    const timeoutIds = texts.map((text) =>
+      setTimeout(() => {
+        setTexts((prevTexts) => prevTexts.filter((t) => t.id !== text.id));
+      }, 1000)
+    );
+
+    // Clean up timeouts on component unmount or when texts change
+    return () => timeoutIds.forEach((timeoutId) => clearTimeout(timeoutId));
   }, [texts]);
 
   return (
@@ -86,9 +100,9 @@ export function ClickHandler(props: {
         draggable="false"
         style={{ userSelect: "none" }}
       />
-      {texts.map((text, index) => (
+      {texts.map((text) => (
         <div
-          key={index}
+          key={text.id}
           style={{
             color: "#fff",
             fontSize: "40px",
@@ -105,7 +119,10 @@ export function ClickHandler(props: {
           {text.value}
         </div>
       ))}
+<<<<<<< HEAD
       {/* <div style={{ position: 'absolute', bottom: 10, left: 10, color: '#fff' }}> */}
+=======
+>>>>>>> 114c7d7ff57ce843422b1448a90e150befab91af
       <div
         style={{
           position: "relative",
