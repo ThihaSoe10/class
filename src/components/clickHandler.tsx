@@ -1,15 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import logo from '../assets/ClickerLogo.png';
+import React, { useState, useEffect } from "react";
+import logo from "../assets/click.png";
 
 export function ClickHandler(props: {
-  balanceRef: React.MutableRefObject<{ value: number }>,
-  increment: number,
-  energy: number,
-  maxEnergy: number,
-  setEnergy: React.Dispatch<React.SetStateAction<number>>,
+  balanceRef: React.MutableRefObject<{ value: number }>;
+  increment: number;
+  energy: number;
+  maxEnergy: number;
+  setEnergy: React.Dispatch<React.SetStateAction<number>>;
 }) {
   const [texts, setTexts] = useState<
-    Array<{ value: string; position: { x: number; y: number }; opacity: number }>
+    Array<{
+      value: string;
+      position: { x: number; y: number };
+      opacity: number;
+    }>
   >([]);
 
   //const maxEnergy = 100;
@@ -22,14 +26,20 @@ export function ClickHandler(props: {
 
   const handleClickText = (event: React.MouseEvent<HTMLImageElement>) => {
     const { clientX, clientY } = event;
-    const newText = { value: `+${props.increment}`, position: { x: clientX, y: clientY }, opacity: 1 };
+    const newText = {
+      value: `+${props.increment}`,
+      position: { x: clientX, y: clientY },
+      opacity: 1,
+    };
 
     setTexts((prevTexts) => [...prevTexts, newText]);
   };
 
   function handleClick() {
     if (props.energy >= props.increment) {
-      props.balanceRef.current.value = Math.round((props.balanceRef.current.value + props.increment) * 100) / 100;
+      props.balanceRef.current.value =
+        Math.round((props.balanceRef.current.value + props.increment) * 100) /
+        100;
       props.setEnergy((prevEnergy) => prevEnergy - props.increment);
     }
   }
@@ -71,24 +81,24 @@ export function ClickHandler(props: {
         }}
         src={logo}
         alt="logo"
-        className='logoImg'
-        title='Click me!'
-        draggable='false'
-        style={{ userSelect: 'none' }}
+        className="logoImg"
+        title="Click me!"
+        draggable="false"
+        style={{ userSelect: "none" }}
       />
       {texts.map((text, index) => (
         <div
           key={index}
           style={{
-            color: '#fff',
-            fontSize: '40px',
-            position: 'absolute',
+            color: "#fff",
+            fontSize: "40px",
+            position: "absolute",
             top: text.position.y - 30,
             left: text.position.x - 16,
-            padding: '5px',
+            padding: "5px",
             zIndex: 9999,
-            pointerEvents: 'none',
-            transition: 'opacity 0.5s ease', // Add a smooth fading transition
+            pointerEvents: "none",
+            transition: "opacity 0.5s ease", // Add a smooth fading transition
             opacity: text.opacity,
           }}
         >
@@ -96,8 +106,18 @@ export function ClickHandler(props: {
         </div>
       ))}
       {/* <div style={{ position: 'absolute', bottom: 10, left: 10, color: '#fff' }}> */}
-      <div style={{ position: 'relative', bottom: -13, color: ' #ffffffbe',fontSize:26,fontWeight:500,letterSpacing:2 }}>
-        Energy : <span></span>{props.energy}/{props.maxEnergy}
+      <div
+        style={{
+          position: "relative",
+          bottom: -13,
+          color: " #ffffffbe",
+          fontSize: 26,
+          fontWeight: 500,
+          letterSpacing: 2,
+        }}
+      >
+        Energy : <span></span>
+        {props.energy}/{props.maxEnergy}
       </div>
     </>
   );

@@ -24,6 +24,8 @@ import {
   updateUserAutoIncrementInFirebase,
 } from "./firebaseFunctions";
 
+import Countdown from "./components/countdown";
+
 export function App() {
   const balanceRef = useRef({ value: 0 });
   const forceUpdate = useReducer((x) => x + 1, 0)[1];
@@ -44,11 +46,17 @@ export function App() {
     const storedRefillRate = localStorage.getItem("refillRate");
     const storedLastUpdated = localStorage.getItem("lastUpdated");
 
+    //down is for autoincrement
+    const storedBalance = localStorage.getItem("balance");
+    const storedAutoIncrement = localStorage.getItem("autoIncrement");
+
     if (
       storedEnergy &&
       storedMaxEnergy &&
       storedRefillRate &&
-      storedLastUpdated
+      storedLastUpdated &&
+      storedBalance &&
+      storedAutoIncrement
     ) {
       const timePassed = (Date.now() - parseInt(storedLastUpdated, 10)) / 1000; // time in seconds
       console.log("timePassed (seconds):", timePassed);
@@ -66,6 +74,16 @@ export function App() {
       setMaxEnergy(parseInt(storedMaxEnergy, 10));
       setRefillRate(storedRefillRateNum);
       setLastUpdated(Date.now());
+
+      //dowm is for autoincrement time on offline
+      const storedAutoIncrementNum = parseFloat(storedAutoIncrement);
+      const calculatedBalance =
+        parseFloat(storedBalance) +
+        Math.min(
+          storedAutoIncrementNum * timePassed,
+          storedAutoIncrementNum * 7200
+        );
+      balanceRef.current.value = Math.round(calculatedBalance * 100) / 100;
     }
 
     setIsInitialLoad(false); // Set initial load flag to false after loading from localStorage
@@ -78,6 +96,9 @@ export function App() {
       localStorage.setItem("maxEnergy", maxEnergy.toString());
       localStorage.setItem("refillRate", refillRate.toString());
       localStorage.setItem("lastUpdated", lastUpdated.toString());
+      //down is auto increment
+      localStorage.setItem("balance", balanceRef.current.value.toString());
+      localStorage.setItem("autoIncrement", autoIncrement.toString());
     }
   }, [energy, maxEnergy, refillRate, lastUpdated, isInitialLoad]);
 
@@ -235,6 +256,7 @@ export function App() {
       <div className="overlay">
         <div className="container-fluid">
           <div className="row">
+            <Countdown targetDate="2024-10-31T23:59:59" />
             {/*1r-1c first row first col */}
             <div className="col-md col-lg-5">
               <ClickHandler
@@ -610,9 +632,9 @@ export function App() {
             <h2>Follow Our Social And Get More Coin </h2>
             <div className="col-sm col-md-6 col-lg-4">
               <Task
-                name="Join our Telegram"
-                reward={500}
-                show="500"
+                name="Join our Telegram channel"
+                reward={1000}
+                show="1000"
                 link="https://t.me/bitbrawlofficial"
                 balanceRef={balanceRef}
                 onRewardClaimed={handleRewardClaimed}
@@ -620,50 +642,50 @@ export function App() {
             </div>
             <div className="col-sm col-md-6 col-lg-4">
               <Task
-                name="Follow on X"
-                reward={300}
-                show="300"
-                link="https://x.com/BBrawlofficial?t=PnQCk_xj-eXuL__mlBeAqw&s=09"
+                name="Follow X"
+                reward={1000}
+                show="1000"
+                link="https://x.com/MYGTOfficial"
                 balanceRef={balanceRef}
                 onRewardClaimed={handleRewardClaimed}
               />
             </div>
             <div className="col-sm col-md-6 col-lg-4">
               <Task
-                name="Subscribe on youtube"
-                reward={300}
-                show="300"
-                link="https://www.youtube.com/channel/UCuxVXiK-eQc9zh88F3aFz1A"
+                name="Subscribe to channel"
+                reward={1000}
+                show="1000"
+                link="https://youtube.com/@mygofficial2024?si=g3_4OG-sJKxDf7CX"
                 balanceRef={balanceRef}
                 onRewardClaimed={handleRewardClaimed}
               />
             </div>
-            <div className="col-sm col-md-6 col-lg-4">
+            {/* <div className="col-sm col-md-6 col-lg-4">
               <Task
-                name="Follow on Facebook"
-                reward={300}
-                show="300"
+                name="Follow Facebook"
+                reward={1000}
+                show="1000"
                 link="https://www.facebook.com/profile.php?id=61562162609258&mibextid=JRoKGi"
                 balanceRef={balanceRef}
                 onRewardClaimed={handleRewardClaimed}
               />
-            </div>
+            </div> */}
             <div className="col-sm col-md-6 col-lg-4">
               <Task
-                name="Tweet on X"
-                reward={300}
-                show="300"
-                link="https://twitter.com/BBrawlofficial/status/1809998267352269088?t=Ly7Tmfo5FSJHHVFPka5XXw&s=19"
+                name="Retweet on X"
+                reward={1000}
+                show="1000"
+                link="https://x.com/MYGTOfficial/status/1814672761249542273"
                 balanceRef={balanceRef}
                 onRewardClaimed={handleRewardClaimed}
               />
             </div>
             <div className="col-sm col-md-6 col-lg-4">
               <Task
-                name="Watch youtube video"
-                reward={300}
-                show="300"
-                link="https://youtu.be/2of5jslUe3c"
+                name="Watch Video"
+                reward={1000}
+                show="1000"
+                link="https://youtu.be/Co_2zWEx1uk?si=0FmltFvG8rR1BS2h"
                 balanceRef={balanceRef}
                 onRewardClaimed={handleRewardClaimed}
               />
