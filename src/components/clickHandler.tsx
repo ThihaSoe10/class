@@ -1,10 +1,5 @@
-<<<<<<< HEAD
-import React, { useState, useEffect } from "react";
-import logo from "../assets/click.png";
-=======
 import React, { useState, useEffect, useRef } from "react";
-import logo from "../assets/ClickerLogo.png";
->>>>>>> 114c7d7ff57ce843422b1448a90e150befab91af
+import logo from "../assets/click.png";
 
 export function ClickHandler(props: {
   balanceRef: React.MutableRefObject<{ value: number }>;
@@ -15,10 +10,7 @@ export function ClickHandler(props: {
 }) {
   const [texts, setTexts] = useState<
     Array<{
-<<<<<<< HEAD
-=======
       id: number;
->>>>>>> 114c7d7ff57ce843422b1448a90e150befab91af
       value: string;
       position: { x: number; y: number };
       opacity: number;
@@ -35,10 +27,7 @@ export function ClickHandler(props: {
   const handleClickText = (event: React.MouseEvent<HTMLImageElement>) => {
     const { clientX, clientY } = event;
     const newText = {
-<<<<<<< HEAD
-=======
       id: textIdRef.current++,
->>>>>>> 114c7d7ff57ce843422b1448a90e150befab91af
       value: `+${props.increment}`,
       position: { x: clientX, y: clientY },
       opacity: 1,
@@ -119,10 +108,6 @@ export function ClickHandler(props: {
           {text.value}
         </div>
       ))}
-<<<<<<< HEAD
-      {/* <div style={{ position: 'absolute', bottom: 10, left: 10, color: '#fff' }}> */}
-=======
->>>>>>> 114c7d7ff57ce843422b1448a90e150befab91af
       <div
         style={{
           position: "relative",
