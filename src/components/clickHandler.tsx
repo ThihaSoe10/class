@@ -10,45 +10,53 @@ export function ClickHandler(props: {
 }) {
   const [texts, setTexts] = useState<
     Array<{
-      id: number;
       value: string;
       position: { x: number; y: number };
       opacity: number;
     }>
   >([]);
-  const textIdRef = useRef(0); // To keep track of unique IDs for each text
+  const touchPoints = useRef(new Set<number>()); // To track active touch points
 
-  const fadeOutText = (id: number) => {
+  const fadeOutText = (index: number) => {
     setTexts((prevTexts) =>
-      prevTexts.map((text) => (text.id === id ? { ...text, opacity: 0 } : text))
+      prevTexts.map((text, i) => (i === index ? { ...text, opacity: 0 } : text))
     );
   };
 
-  const handleClickText = (event: React.MouseEvent<HTMLImageElement>) => {
-    const { clientX, clientY } = event;
+  const handleClickText = (x: number, y: number) => {
     const newText = {
-      id: textIdRef.current++,
       value: `+${props.increment}`,
-      position: { x: clientX, y: clientY },
+      position: { x, y },
       opacity: 1,
     };
-
     setTexts((prevTexts) => [...prevTexts, newText]);
-
-    // Start the fade-out process for the new text
-    setTimeout(() => {
-      fadeOutText(newText.id);
-    }, 500);
   };
 
-  function handleClick() {
+  const handleClick = () => {
     if (props.energy >= props.increment) {
       props.balanceRef.current.value =
         Math.round((props.balanceRef.current.value + props.increment) * 100) /
         100;
       props.setEnergy((prevEnergy) => prevEnergy - props.increment);
     }
-  }
+  };
+
+  const handleTouchStart = (event: React.TouchEvent<HTMLImageElement>) => {
+    event.preventDefault();
+    Array.from(event.changedTouches).forEach((touch) =>
+      touchPoints.current.add(touch.identifier)
+    );
+  };
+
+  const handleTouchEnd = (event: React.TouchEvent<HTMLImageElement>) => {
+    event.preventDefault();
+    Array.from(event.changedTouches).forEach((touch) => {
+      const { clientX, clientY } = touch;
+      handleClick();
+      handleClickText(clientX, clientY);
+      touchPoints.current.delete(touch.identifier);
+    });
+  };
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -60,19 +68,18 @@ export function ClickHandler(props: {
       );
     }, 10);
 
-    // Clean up the interval on component unmount
-    return () => clearInterval(intervalId);
-  }, []);
+    setTimeout(() => {
+      clearInterval(intervalId);
+    }, 500);
 
-  useEffect(() => {
-    const timeoutIds = texts.map((text) =>
+    if (texts.length > 0) {
+      const lastTextIndex = texts.length - 1;
       setTimeout(() => {
-        setTexts((prevTexts) => prevTexts.filter((t) => t.id !== text.id));
-      }, 1000)
-    );
+        fadeOutText(lastTextIndex);
+      }, 1000);
+    }
 
-    // Clean up timeouts on component unmount or when texts change
-    return () => timeoutIds.forEach((timeoutId) => clearTimeout(timeoutId));
+    return () => clearInterval(intervalId);
   }, [texts]);
 
   return (
@@ -80,8 +87,10 @@ export function ClickHandler(props: {
       <img
         onClick={(e) => {
           handleClick();
-          handleClickText(e);
+          handleClickText(e.clientX, e.clientY);
         }}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
         src={logo}
         alt="logo"
         className="logoImg"
@@ -89,9 +98,9 @@ export function ClickHandler(props: {
         draggable="false"
         style={{ userSelect: "none" }}
       />
-      {texts.map((text) => (
+      {texts.map((text, index) => (
         <div
-          key={text.id}
+          key={index}
           style={{
             color: "#fff",
             fontSize: "40px",
@@ -101,7 +110,7 @@ export function ClickHandler(props: {
             padding: "5px",
             zIndex: 9999,
             pointerEvents: "none",
-            transition: "opacity 0.5s ease", // Add a smooth fading transition
+            transition: "opacity 0.5s ease",
             opacity: text.opacity,
           }}
         >
