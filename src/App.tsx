@@ -151,10 +151,6 @@ export function App() {
       ["refClicker03", new UpgradeState(1500, 2, 0, 1.5)],
       ["refClicker04", new UpgradeState(4000, 2, 0, 2)],
       ["refClicker05", new UpgradeState(4000, 2, 0, 2)],
-      ["refClicker06", new UpgradeState(1500, 2, 0, 1.5)],
-      ["refClicker07", new UpgradeState(4000, 2, 0, 2)],
-      ["refClicker08", new UpgradeState(8000, 2, 0, 2.5)],
-      ["refClicker09", new UpgradeState(15000, 2, 0, 3)],
     ])
   );
 
@@ -168,7 +164,7 @@ export function App() {
 
   let autoIncrement: number =
     Math.round(
-      upgradeMap.current.get("autoClicker01")!.increment +
+      (upgradeMap.current.get("autoClicker01")!.increment +
         upgradeMap.current.get("autoClicker02")!.increment +
         upgradeMap.current.get("autoClicker03")!.increment +
         upgradeMap.current.get("autoClicker04")!.increment +
@@ -180,11 +176,8 @@ export function App() {
         upgradeMap.current.get("refClicker02")!.increment +
         upgradeMap.current.get("refClicker03")!.increment +
         upgradeMap.current.get("refClicker04")!.increment +
-        upgradeMap.current.get("refClicker05")!.increment +
-        upgradeMap.current.get("refClicker06")!.increment +
-        upgradeMap.current.get("refClicker07")!.increment +
-        upgradeMap.current.get("refClicker08")!.increment +
-        upgradeMap.current.get("refClicker09")!.increment * 100
+        upgradeMap.current.get("refClicker05")!.increment) *
+        100
     ) / 100;
 
   //database
@@ -262,398 +255,303 @@ export function App() {
     <>
       <div className="overlay">
         <div className="container-fluid">
-          <div className="row">
-            <Countdown targetDate="2024-10-31T23:59:59" />
-            {/*1r-1c first row first col */}
-            <div className="col-md col-lg-5">
-              <ClickHandler
-                balanceRef={balanceRef}
-                increment={upgradeMap.current.get("clickUpgrade")!.increment}
-                energy={energy}
-                maxEnergy={maxEnergy}
-                setEnergy={setEnergy}
-              />
-              <DisplayStats
-                balanceRef={balanceRef}
-                clickIncrement={
-                  upgradeMap.current.get("clickUpgrade")!.increment
-                }
-                autoIncrement={autoIncrement}
-                refillRate={refillRate}
-              />
-              <SaveGame
-                balanceRef={balanceRef}
-                upgradeMap={upgradeMap}
-                upgradeEnergyMap={upgradeEnergyMap}
-                //  setMaxEnergy={setMaxEnergy}
-                //  setRefillRate={setRefillRate}
-              />
-            </div>
-            {/* 1r first row */}
-            <div className="col-md-12 col-lg-7">
-              <h1>UPGRADES</h1>
-              <div className="row">
-                <div className="center col-6 col-sm-6 col-md-6 col-lg-6">
-                  <UpgradeButton
-                    id="autoClicker01"
-                    name="Slime"
-                    level={upgradeMap.current.get("autoClicker01")!.level}
-                    cost={upgradeMap.current.get("autoClicker01")!.currentCost}
-                    increment={
-                      upgradeMap.current.get("autoClicker01")!.incrementAdd
-                    }
-                    balance={balanceRef.current.value}
-                    autoIncrementTotal={autoIncrement}
-                    clickHandler={(id) => {
-                      upgradeInvocationHandler(
-                        id,
-                        upgradeMap,
-                        upgradeEnergyMap,
-                        balanceRef,
-                        setMaxEnergy,
-                        setRefillRate
-                      );
-                    }}
-                  />
-                  <UpgradeButton
-                    id="autoClicker03"
-                    name="Warrior"
-                    level={upgradeMap.current.get("autoClicker03")!.level}
-                    cost={upgradeMap.current.get("autoClicker03")!.currentCost}
-                    increment={
-                      upgradeMap.current.get("autoClicker03")!.incrementAdd
-                    }
-                    balance={balanceRef.current.value}
-                    autoIncrementTotal={autoIncrement}
-                    clickHandler={(id) => {
-                      upgradeInvocationHandler(
-                        id,
-                        upgradeMap,
-                        upgradeEnergyMap,
-                        balanceRef,
-                        setMaxEnergy,
-                        setRefillRate
-                      );
-                    }}
-                  />
-                  <UpgradeButton
-                    id="autoClicker05"
-                    name="ELF"
-                    level={upgradeMap.current.get("autoClicker05")!.level}
-                    cost={upgradeMap.current.get("autoClicker05")!.currentCost}
-                    increment={
-                      upgradeMap.current.get("autoClicker05")!.incrementAdd
-                    }
-                    balance={balanceRef.current.value}
-                    autoIncrementTotal={autoIncrement}
-                    clickHandler={(id) => {
-                      upgradeInvocationHandler(
-                        id,
-                        upgradeMap,
-                        upgradeEnergyMap,
-                        balanceRef,
-                        setMaxEnergy,
-                        setRefillRate
-                      );
-                    }}
-                  />
-                  <UpgradeButton
-                    id="autoClicker07"
-                    name="Wizard"
-                    level={upgradeMap.current.get("autoClicker07")!.level}
-                    cost={upgradeMap.current.get("autoClicker07")!.currentCost}
-                    increment={
-                      upgradeMap.current.get("autoClicker07")!.incrementAdd
-                    }
-                    balance={balanceRef.current.value}
-                    autoIncrementTotal={autoIncrement}
-                    clickHandler={(id) => {
-                      upgradeInvocationHandler(
-                        id,
-                        upgradeMap,
-                        upgradeEnergyMap,
-                        balanceRef,
-                        setMaxEnergy,
-                        setRefillRate
-                      );
-                    }}
-                  />
-                  <RefUpgradeButton
-                    id="refClicker02"
-                    name="Sage"
-                    refshow={2}
-                    level={upgradeMap.current.get("refClicker02")!.level}
-                    cost={upgradeMap.current.get("refClicker02")!.currentCost}
-                    increment={
-                      upgradeMap.current.get("refClicker02")!.incrementAdd
-                    }
-                    balance={balanceRef.current.value}
-                    autoIncrementTotal={autoIncrement}
-                    userId={userId}
-                    clickHandler={(id) => {
-                      upgradeInvocationHandler(
-                        id,
-                        upgradeMap,
-                        upgradeEnergyMap,
-                        balanceRef,
-                        setMaxEnergy,
-                        setRefillRate
-                      );
-                    }}
-                  />
-                  <RefUpgradeButton
-                    id="refClicker04"
-                    name="Golem"
-                    refshow={3}
-                    level={upgradeMap.current.get("refClicker04")!.level}
-                    cost={upgradeMap.current.get("refClicker04")!.currentCost}
-                    increment={
-                      upgradeMap.current.get("refClicker04")!.incrementAdd
-                    }
-                    balance={balanceRef.current.value}
-                    autoIncrementTotal={autoIncrement}
-                    userId={userId}
-                    clickHandler={(id) => {
-                      upgradeInvocationHandler(
-                        id,
-                        upgradeMap,
-                        upgradeEnergyMap,
-                        balanceRef,
-                        setMaxEnergy,
-                        setRefillRate
-                      );
-                    }}
-                  />
-                  <RefUpgradeButton
-                    id="refClicker06"
-                    name="Lizardman"
-                    refshow={2}
-                    level={upgradeMap.current.get("refClicker06")!.level}
-                    cost={upgradeMap.current.get("refClicker06")!.currentCost}
-                    increment={
-                      upgradeMap.current.get("refClicker06")!.incrementAdd
-                    }
-                    balance={balanceRef.current.value}
-                    autoIncrementTotal={autoIncrement}
-                    userId={userId}
-                    clickHandler={(id) => {
-                      upgradeInvocationHandler(
-                        id,
-                        upgradeMap,
-                        upgradeEnergyMap,
-                        balanceRef,
-                        setMaxEnergy,
-                        setRefillRate
-                      );
-                    }}
-                  />
-                  <RefUpgradeButton
-                    id="refClicker08"
-                    name="Unicorn"
-                    refshow={4}
-                    level={upgradeMap.current.get("refClicker08")!.level}
-                    cost={upgradeMap.current.get("refClicker08")!.currentCost}
-                    increment={
-                      upgradeMap.current.get("refClicker08")!.incrementAdd
-                    }
-                    balance={balanceRef.current.value}
-                    autoIncrementTotal={autoIncrement}
-                    userId={userId}
-                    clickHandler={(id) => {
-                      upgradeInvocationHandler(
-                        id,
-                        upgradeMap,
-                        upgradeEnergyMap,
-                        balanceRef,
-                        setMaxEnergy,
-                        setRefillRate
-                      );
-                    }}
-                  />
-                </div>
-                <div className="center col-6 col-sm-6 col-md-6 col-lg-6">
-                  <UpgradeButton
-                    id="autoClicker02"
-                    name="Goblin"
-                    level={upgradeMap.current.get("autoClicker02")!.level}
-                    cost={upgradeMap.current.get("autoClicker02")!.currentCost}
-                    increment={
-                      upgradeMap.current.get("autoClicker02")!.incrementAdd
-                    }
-                    balance={balanceRef.current.value}
-                    autoIncrementTotal={autoIncrement}
-                    clickHandler={(id) => {
-                      upgradeInvocationHandler(
-                        id,
-                        upgradeMap,
-                        upgradeEnergyMap,
-                        balanceRef,
-                        setMaxEnergy,
-                        setRefillRate
-                      );
-                    }}
-                  />
-                  <UpgradeButton
-                    id="autoClicker04"
-                    name="Knight"
-                    level={upgradeMap.current.get("autoClicker04")!.level}
-                    cost={upgradeMap.current.get("autoClicker04")!.currentCost}
-                    increment={
-                      upgradeMap.current.get("autoClicker04")!.incrementAdd
-                    }
-                    balance={balanceRef.current.value}
-                    autoIncrementTotal={autoIncrement}
-                    clickHandler={(id) => {
-                      upgradeInvocationHandler(
-                        id,
-                        upgradeMap,
-                        upgradeEnergyMap,
-                        balanceRef,
-                        setMaxEnergy,
-                        setRefillRate
-                      );
-                    }}
-                  />
-                  <UpgradeButton
-                    id="autoClicker06"
-                    name="Dwarf"
-                    level={upgradeMap.current.get("autoClicker06")!.level}
-                    cost={upgradeMap.current.get("autoClicker06")!.currentCost}
-                    increment={
-                      upgradeMap.current.get("autoClicker06")!.incrementAdd
-                    }
-                    balance={balanceRef.current.value}
-                    autoIncrementTotal={autoIncrement}
-                    clickHandler={(id) => {
-                      upgradeInvocationHandler(
-                        id,
-                        upgradeMap,
-                        upgradeEnergyMap,
-                        balanceRef,
-                        setMaxEnergy,
-                        setRefillRate
-                      );
-                    }}
-                  />
-                  <RefUpgradeButton
-                    id="refClicker01"
-                    name="Werewolf"
-                    refshow={1}
-                    level={upgradeMap.current.get("refClicker01")!.level}
-                    cost={upgradeMap.current.get("refClicker01")!.currentCost}
-                    increment={
-                      upgradeMap.current.get("refClicker01")!.incrementAdd
-                    }
-                    balance={balanceRef.current.value}
-                    autoIncrementTotal={autoIncrement}
-                    userId={userId}
-                    clickHandler={(id) => {
-                      upgradeInvocationHandler(
-                        id,
-                        upgradeMap,
-                        upgradeEnergyMap,
-                        balanceRef,
-                        setMaxEnergy,
-                        setRefillRate
-                      );
-                    }}
-                  />
-                  <RefUpgradeButton
-                    id="refClicker03"
-                    name="Mermaid"
-                    refshow={2}
-                    level={upgradeMap.current.get("refClicker03")!.level}
-                    cost={upgradeMap.current.get("refClicker03")!.currentCost}
-                    increment={
-                      upgradeMap.current.get("refClicker03")!.incrementAdd
-                    }
-                    balance={balanceRef.current.value}
-                    autoIncrementTotal={autoIncrement}
-                    userId={userId}
-                    clickHandler={(id) => {
-                      upgradeInvocationHandler(
-                        id,
-                        upgradeMap,
-                        upgradeEnergyMap,
-                        balanceRef,
-                        setMaxEnergy,
-                        setRefillRate
-                      );
-                    }}
-                  />
-                  <RefUpgradeButton
-                    id="refClicker05"
-                    name="Vampire"
-                    refshow={3}
-                    level={upgradeMap.current.get("refClicker05")!.level}
-                    cost={upgradeMap.current.get("refClicker05")!.currentCost}
-                    increment={
-                      upgradeMap.current.get("refClicker05")!.incrementAdd
-                    }
-                    balance={balanceRef.current.value}
-                    autoIncrementTotal={autoIncrement}
-                    userId={userId}
-                    clickHandler={(id) => {
-                      upgradeInvocationHandler(
-                        id,
-                        upgradeMap,
-                        upgradeEnergyMap,
-                        balanceRef,
-                        setMaxEnergy,
-                        setRefillRate
-                      );
-                    }}
-                  />
-                  <RefUpgradeButton
-                    id="refClicker07"
-                    name="Succubus"
-                    refshow={3}
-                    level={upgradeMap.current.get("refClicker07")!.level}
-                    cost={upgradeMap.current.get("refClicker07")!.currentCost}
-                    increment={
-                      upgradeMap.current.get("refClicker07")!.incrementAdd
-                    }
-                    balance={balanceRef.current.value}
-                    autoIncrementTotal={autoIncrement}
-                    userId={userId}
-                    clickHandler={(id) => {
-                      upgradeInvocationHandler(
-                        id,
-                        upgradeMap,
-                        upgradeEnergyMap,
-                        balanceRef,
-                        setMaxEnergy,
-                        setRefillRate
-                      );
-                    }}
-                  />
-                  <RefUpgradeButton
-                    id="refClicker09"
-                    name="Minotaur"
-                    refshow={5}
-                    level={upgradeMap.current.get("refClicker09")!.level}
-                    cost={upgradeMap.current.get("refClicker09")!.currentCost}
-                    increment={
-                      upgradeMap.current.get("refClicker09")!.incrementAdd
-                    }
-                    balance={balanceRef.current.value}
-                    autoIncrementTotal={autoIncrement}
-                    userId={userId}
-                    clickHandler={(id) => {
-                      upgradeInvocationHandler(
-                        id,
-                        upgradeMap,
-                        upgradeEnergyMap,
-                        balanceRef,
-                        setMaxEnergy,
-                        setRefillRate
-                      );
-                    }}
-                  />
-                </div>
+          {/*1r-1c first row first col */}
+          {/* <div className="col-md col-lg-5"> */}
+          <Countdown targetDate="2024-10-31T23:59:59" />
+          <ClickHandler
+            balanceRef={balanceRef}
+            increment={upgradeMap.current.get("clickUpgrade")!.increment}
+            energy={energy}
+            maxEnergy={maxEnergy}
+            setEnergy={setEnergy}
+          />
+          <DisplayStats
+            balanceRef={balanceRef}
+            clickIncrement={upgradeMap.current.get("clickUpgrade")!.increment}
+            autoIncrement={autoIncrement}
+            refillRate={refillRate}
+          />
+          <SaveGame
+            balanceRef={balanceRef}
+            upgradeMap={upgradeMap}
+            upgradeEnergyMap={upgradeEnergyMap}
+            //  setMaxEnergy={setMaxEnergy}
+            //  setRefillRate={setRefillRate}
+          />
+          {/* </div> */}
+          {/* 1r first row */}
+          <div className="col-md-12 col-lg-7">
+            <h1>UPGRADES</h1>
+            <div className="row">
+              <div className="center col-6 col-sm-6 col-md-6 col-lg-6">
+                <UpgradeButton
+                  id="autoClicker01"
+                  name="Slime"
+                  level={upgradeMap.current.get("autoClicker01")!.level}
+                  cost={upgradeMap.current.get("autoClicker01")!.currentCost}
+                  increment={
+                    upgradeMap.current.get("autoClicker01")!.incrementAdd
+                  }
+                  balance={balanceRef.current.value}
+                  autoIncrementTotal={autoIncrement}
+                  clickHandler={(id) => {
+                    upgradeInvocationHandler(
+                      id,
+                      upgradeMap,
+                      upgradeEnergyMap,
+                      balanceRef,
+                      setMaxEnergy,
+                      setRefillRate
+                    );
+                  }}
+                />
+                <UpgradeButton
+                  id="autoClicker03"
+                  name="Warrior"
+                  level={upgradeMap.current.get("autoClicker03")!.level}
+                  cost={upgradeMap.current.get("autoClicker03")!.currentCost}
+                  increment={
+                    upgradeMap.current.get("autoClicker03")!.incrementAdd
+                  }
+                  balance={balanceRef.current.value}
+                  autoIncrementTotal={autoIncrement}
+                  clickHandler={(id) => {
+                    upgradeInvocationHandler(
+                      id,
+                      upgradeMap,
+                      upgradeEnergyMap,
+                      balanceRef,
+                      setMaxEnergy,
+                      setRefillRate
+                    );
+                  }}
+                />
+                <UpgradeButton
+                  id="autoClicker05"
+                  name="ELF"
+                  level={upgradeMap.current.get("autoClicker05")!.level}
+                  cost={upgradeMap.current.get("autoClicker05")!.currentCost}
+                  increment={
+                    upgradeMap.current.get("autoClicker05")!.incrementAdd
+                  }
+                  balance={balanceRef.current.value}
+                  autoIncrementTotal={autoIncrement}
+                  clickHandler={(id) => {
+                    upgradeInvocationHandler(
+                      id,
+                      upgradeMap,
+                      upgradeEnergyMap,
+                      balanceRef,
+                      setMaxEnergy,
+                      setRefillRate
+                    );
+                  }}
+                />
+                <UpgradeButton
+                  id="autoClicker07"
+                  name="Wizard"
+                  level={upgradeMap.current.get("autoClicker07")!.level}
+                  cost={upgradeMap.current.get("autoClicker07")!.currentCost}
+                  increment={
+                    upgradeMap.current.get("autoClicker07")!.incrementAdd
+                  }
+                  balance={balanceRef.current.value}
+                  autoIncrementTotal={autoIncrement}
+                  clickHandler={(id) => {
+                    upgradeInvocationHandler(
+                      id,
+                      upgradeMap,
+                      upgradeEnergyMap,
+                      balanceRef,
+                      setMaxEnergy,
+                      setRefillRate
+                    );
+                  }}
+                />
+                <RefUpgradeButton
+                  id="refClicker02"
+                  name="Sage"
+                  refshow={2}
+                  level={upgradeMap.current.get("refClicker02")!.level}
+                  cost={upgradeMap.current.get("refClicker02")!.currentCost}
+                  increment={
+                    upgradeMap.current.get("refClicker02")!.incrementAdd
+                  }
+                  balance={balanceRef.current.value}
+                  autoIncrementTotal={autoIncrement}
+                  userId={userId}
+                  clickHandler={(id) => {
+                    upgradeInvocationHandler(
+                      id,
+                      upgradeMap,
+                      upgradeEnergyMap,
+                      balanceRef,
+                      setMaxEnergy,
+                      setRefillRate
+                    );
+                  }}
+                />
+                <RefUpgradeButton
+                  id="refClicker04"
+                  name="Golem"
+                  refshow={3}
+                  level={upgradeMap.current.get("refClicker04")!.level}
+                  cost={upgradeMap.current.get("refClicker04")!.currentCost}
+                  increment={
+                    upgradeMap.current.get("refClicker04")!.incrementAdd
+                  }
+                  balance={balanceRef.current.value}
+                  autoIncrementTotal={autoIncrement}
+                  userId={userId}
+                  clickHandler={(id) => {
+                    upgradeInvocationHandler(
+                      id,
+                      upgradeMap,
+                      upgradeEnergyMap,
+                      balanceRef,
+                      setMaxEnergy,
+                      setRefillRate
+                    );
+                  }}
+                />
+              </div>
+              <div className="center col-6 col-sm-6 col-md-6 col-lg-6">
+                <UpgradeButton
+                  id="autoClicker02"
+                  name="Goblin"
+                  level={upgradeMap.current.get("autoClicker02")!.level}
+                  cost={upgradeMap.current.get("autoClicker02")!.currentCost}
+                  increment={
+                    upgradeMap.current.get("autoClicker02")!.incrementAdd
+                  }
+                  balance={balanceRef.current.value}
+                  autoIncrementTotal={autoIncrement}
+                  clickHandler={(id) => {
+                    upgradeInvocationHandler(
+                      id,
+                      upgradeMap,
+                      upgradeEnergyMap,
+                      balanceRef,
+                      setMaxEnergy,
+                      setRefillRate
+                    );
+                  }}
+                />
+                <UpgradeButton
+                  id="autoClicker04"
+                  name="Knight"
+                  level={upgradeMap.current.get("autoClicker04")!.level}
+                  cost={upgradeMap.current.get("autoClicker04")!.currentCost}
+                  increment={
+                    upgradeMap.current.get("autoClicker04")!.incrementAdd
+                  }
+                  balance={balanceRef.current.value}
+                  autoIncrementTotal={autoIncrement}
+                  clickHandler={(id) => {
+                    upgradeInvocationHandler(
+                      id,
+                      upgradeMap,
+                      upgradeEnergyMap,
+                      balanceRef,
+                      setMaxEnergy,
+                      setRefillRate
+                    );
+                  }}
+                />
+                <UpgradeButton
+                  id="autoClicker06"
+                  name="Dwarf"
+                  level={upgradeMap.current.get("autoClicker06")!.level}
+                  cost={upgradeMap.current.get("autoClicker06")!.currentCost}
+                  increment={
+                    upgradeMap.current.get("autoClicker06")!.incrementAdd
+                  }
+                  balance={balanceRef.current.value}
+                  autoIncrementTotal={autoIncrement}
+                  clickHandler={(id) => {
+                    upgradeInvocationHandler(
+                      id,
+                      upgradeMap,
+                      upgradeEnergyMap,
+                      balanceRef,
+                      setMaxEnergy,
+                      setRefillRate
+                    );
+                  }}
+                />
+                <RefUpgradeButton
+                  id="refClicker01"
+                  name="Werewolf"
+                  refshow={1}
+                  level={upgradeMap.current.get("refClicker01")!.level}
+                  cost={upgradeMap.current.get("refClicker01")!.currentCost}
+                  increment={
+                    upgradeMap.current.get("refClicker01")!.incrementAdd
+                  }
+                  balance={balanceRef.current.value}
+                  autoIncrementTotal={autoIncrement}
+                  userId={userId}
+                  clickHandler={(id) => {
+                    upgradeInvocationHandler(
+                      id,
+                      upgradeMap,
+                      upgradeEnergyMap,
+                      balanceRef,
+                      setMaxEnergy,
+                      setRefillRate
+                    );
+                  }}
+                />
+                <RefUpgradeButton
+                  id="refClicker03"
+                  name="Mermaid"
+                  refshow={2}
+                  level={upgradeMap.current.get("refClicker03")!.level}
+                  cost={upgradeMap.current.get("refClicker03")!.currentCost}
+                  increment={
+                    upgradeMap.current.get("refClicker03")!.incrementAdd
+                  }
+                  balance={balanceRef.current.value}
+                  autoIncrementTotal={autoIncrement}
+                  userId={userId}
+                  clickHandler={(id) => {
+                    upgradeInvocationHandler(
+                      id,
+                      upgradeMap,
+                      upgradeEnergyMap,
+                      balanceRef,
+                      setMaxEnergy,
+                      setRefillRate
+                    );
+                  }}
+                />
+                <RefUpgradeButton
+                  id="refClicker05"
+                  name="Vampire"
+                  refshow={3}
+                  level={upgradeMap.current.get("refClicker05")!.level}
+                  cost={upgradeMap.current.get("refClicker05")!.currentCost}
+                  increment={
+                    upgradeMap.current.get("refClicker05")!.incrementAdd
+                  }
+                  balance={balanceRef.current.value}
+                  autoIncrementTotal={autoIncrement}
+                  userId={userId}
+                  clickHandler={(id) => {
+                    upgradeInvocationHandler(
+                      id,
+                      upgradeMap,
+                      upgradeEnergyMap,
+                      balanceRef,
+                      setMaxEnergy,
+                      setRefillRate
+                    );
+                  }}
+                />
               </div>
             </div>
           </div>
+
           {/*2r second row for Booster */}
           <div className="booster row">
             <h2>Booster</h2>
