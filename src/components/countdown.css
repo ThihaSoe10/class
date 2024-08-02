@@ -9,32 +9,30 @@
   }
 }
 
-/* countdown.css */
-
 .countdown-container {
-  font-family: "Poppins", sans-serif;
-  font-weight: 900;
-  font-style: italic;
-  background-color: transparent;
-  padding: 10px;
-  border-radius: 10px;
-  color: rgba(76,194,220,255);
-  font-size: 1em;
-  text-align: center;
-  border: 2px solid rgba(105,43,142,255);
-  max-width: 300px;
-  width: 90%;
-  margin: 20px auto;
-  position: relative; /* For pseudo-element positioning */
-  overflow: hidden; /* Ensure pseudo-elements stay within the container */
+    font-family: "Poppins", sans-serif;
+    font-weight: 900;
+    font-style: italic;
+    background-color: transparent;
+    padding: 10px;
+    border-radius: 10px;
+    color: rgba(76,194,220,255);
+    font-size: 1em;
+    text-align: center;
+    border: 2px solid rgba(105,43,142,255);
+    max-width: 300px;
+    width: 90%;
+    margin: 0px auto 10px auto;
+    top: 15px;
+    position: relative; /* For pseudo-element positioning */
+    overflow: hidden; /* Ensure pseudo-elements stay within the container */
 }
 
 .countdown-container h2 {
-  margin-bottom: 10px;
-  font-size: 1em;
+    margin-bottom: 10px;
+    font-size: 1em;
 }
 
 .countdown {
-  font-size: 1.2em;
+    font-size: 1.2em;
 }
-

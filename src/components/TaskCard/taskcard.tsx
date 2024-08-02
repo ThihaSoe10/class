@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./task.css";
+import "./taskcard.css";
 
 interface TaskProps {
   name: string;
@@ -10,7 +10,7 @@ interface TaskProps {
   onRewardClaimed: () => void;
 }
 
-const Task: React.FC<TaskProps> = ({
+const TaskCard: React.FC<TaskProps> = ({
   name,
   reward,
   show,
@@ -128,4 +128,4 @@ const Task: React.FC<TaskProps> = ({
   );
 };
 
-export default Task;
+export default TaskCard;

@@ -145,7 +145,7 @@ const RefUpgradeButton: FunctionComponent<ButtonProps> = (
           style={{
             height: "70px",
             display: "inline-block",
-            margin: "10px",
+            margin: "5px",
             padding: "0",
           }}
         >
