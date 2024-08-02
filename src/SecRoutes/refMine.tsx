@@ -6,6 +6,11 @@ import UpgradeEnergy from "../classes/upgradeEnergy";
 import RefUpgradeButton from "../components/Cards/refCard";
 import { ShareBal } from "../components/ShareBalance/sharebalance";
 import { SaveGame } from "../components/saveGame";
+//firebase
+import {
+  sendUserDataToFirebase,
+  updateUserAutoIncrementInFirebase,
+} from "../firebaseFunctions";
 
 export function Refmine() {
   const balanceRef = useRef({ value: 0 });
@@ -80,42 +85,42 @@ export function Refmine() {
       localStorage.setItem("autoIncrement", autoIncrement.toString());
     }
   }, [energy, maxEnergy, refillRate, lastUpdated, isInitialLoad]);
+  useEffect(() => {
+    // Initialize the Telegram Web App SDK
+    const initTelegram = () => {
+      const tg = window.Telegram.WebApp;
+      tg.ready();
+      // Debug logging
+      console.log("Telegram Web App SDK initialized");
+      console.log("tg.initDataUnsafe:", tg.initDataUnsafe);
 
-  // useEffect(() => {
-  //   // Initialize the Telegram Web App SDK
-  //   const initTelegram = () => {
-  //     const tg = window.Telegram.WebApp;
-  //     tg.ready();
-  //     // Debug logging
-  //     console.log('Telegram Web App SDK initialized');
-  //     console.log('tg.initDataUnsafe:', tg.initDataUnsafe);
+      const user = tg.initDataUnsafe?.user;
 
-  //     const user = tg.initDataUnsafe?.user;
+      if (user) {
+        const id = user.id.toString();
+        setUserId(user.id.toString());
+        sendUserDataToFirebase(id, autoIncrement);
+      }
+    };
 
-  //     if (user) {
-  //       const id = user.id.toString();
-  //       setUserId(user.id.toString());
-  //       sendUserDataToFirebase(id, autoIncrement);
-  //     }
-  //   };
+    if (window.Telegram) {
+      console.log("Telegram SDK is already loaded");
+      initTelegram();
+    } else {
+      console.log("Waiting for Telegram SDK to be ready");
+      window.addEventListener("TelegramWebAppReady", initTelegram);
+    }
 
-  //   if (window.Telegram) {
-  //     console.log('Telegram SDK is already loaded');
-  //     initTelegram();
-  //   } else {
-  //     console.log('Waiting for Telegram SDK to be ready');
-  //     window.addEventListener('TelegramWebAppReady', initTelegram);
-  //   }
-
-  //   return () => {
-  //     window.removeEventListener('TelegramWebAppReady', initTelegram);
-  //   };
-  // }, []);
+    return () => {
+      window.removeEventListener("TelegramWebAppReady", initTelegram);
+    };
+  }, []);
 
   //up is user
 
   //routuerchange
-   const upgradeMap = useRef(
+  //routuerchange1
+  const upgradeMap = useRef(
     new Map<string, UpgradeState>([
       ["clickUpgrade", new UpgradeState(15, 2, 1, 2)],
       ["autoClicker01", new UpgradeState(80, 2, 0, 0.1)],
@@ -164,18 +169,16 @@ export function Refmine() {
         upgradeMap.current.get("refClicker06")!.increment +
         upgradeMap.current.get("refClicker07")!.increment +
         upgradeMap.current.get("refClicker08")!.increment +
-        upgradeMap.current.get("refClicker09")!.increment ) *
+        upgradeMap.current.get("refClicker09")!.increment) *
         100
     ) / 100;
-
-
-  //     //downdatabase
-  //     useEffect(() => {
-  //       if (userId !== null) {
-  //         updateUserAutoIncrementInFirebase(userId, autoIncrement);
-  //       }
-  //     }, [autoIncrement]);
-  // //updatabse
+  //downdatabase
+  useEffect(() => {
+    if (userId !== null) {
+      updateUserAutoIncrementInFirebase(userId, autoIncrement);
+    }
+  }, [autoIncrement]);
+  //updatabse
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -222,7 +225,6 @@ export function Refmine() {
   const handleRewardClaimed = () => {
     forceUpdate(); // Force an update to reflect the new balance
   };
-
   return (
     <>
       <SaveGame
@@ -281,51 +283,47 @@ export function Refmine() {
             }}
           />
           <RefUpgradeButton
-                  id="refClicker06"
-                  name="Lizardman"
-                  refshow={2}
-                  level={upgradeMap.current.get("refClicker06")!.level}
-                  cost={upgradeMap.current.get("refClicker06")!.currentCost}
-                  increment={
-                    upgradeMap.current.get("refClicker06")!.incrementAdd
-                  }
-                  balance={balanceRef.current.value}
-                  autoIncrementTotal={autoIncrement}
-                  userId={userId}
-                  clickHandler={(id) => {
-                    upgradeInvocationHandler(
-                      id,
-                      upgradeMap,
-                      upgradeEnergyMap,
-                      balanceRef,
-                      setMaxEnergy,
-                      setRefillRate
-                    );
-                  }}
-                />
-                <RefUpgradeButton
-                  id="refClicker08"
-                  name="Unicorn"
-                  refshow={4}
-                  level={upgradeMap.current.get("refClicker08")!.level}
-                  cost={upgradeMap.current.get("refClicker08")!.currentCost}
-                  increment={
-                    upgradeMap.current.get("refClicker08")!.incrementAdd
-                  }
-                  balance={balanceRef.current.value}
-                  autoIncrementTotal={autoIncrement}
-                  userId={userId}
-                  clickHandler={(id) => {
-                    upgradeInvocationHandler(
-                      id,
-                      upgradeMap,
-                      upgradeEnergyMap,
-                      balanceRef,
-                      setMaxEnergy,
-                      setRefillRate
-                    );
-                  }}
-                />
+            id="refClicker06"
+            name="Lizardman"
+            refshow={2}
+            level={upgradeMap.current.get("refClicker06")!.level}
+            cost={upgradeMap.current.get("refClicker06")!.currentCost}
+            increment={upgradeMap.current.get("refClicker06")!.incrementAdd}
+            balance={balanceRef.current.value}
+            autoIncrementTotal={autoIncrement}
+            userId={userId}
+            clickHandler={(id) => {
+              upgradeInvocationHandler(
+                id,
+                upgradeMap,
+                upgradeEnergyMap,
+                balanceRef,
+                setMaxEnergy,
+                setRefillRate
+              );
+            }}
+          />
+          <RefUpgradeButton
+            id="refClicker08"
+            name="Unicorn"
+            refshow={4}
+            level={upgradeMap.current.get("refClicker08")!.level}
+            cost={upgradeMap.current.get("refClicker08")!.currentCost}
+            increment={upgradeMap.current.get("refClicker08")!.incrementAdd}
+            balance={balanceRef.current.value}
+            autoIncrementTotal={autoIncrement}
+            userId={userId}
+            clickHandler={(id) => {
+              upgradeInvocationHandler(
+                id,
+                upgradeMap,
+                upgradeEnergyMap,
+                balanceRef,
+                setMaxEnergy,
+                setRefillRate
+              );
+            }}
+          />
         </div>
         <div className="col-6">
           <RefUpgradeButton
