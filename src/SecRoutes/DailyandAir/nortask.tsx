@@ -124,6 +124,9 @@ export function Nortask() {
       ["autoClicker05", new UpgradeState(5000, 2, 0, 1)],
       ["autoClicker06", new UpgradeState(5000, 2, 0, 1)],
       ["autoClicker07", new UpgradeState(10000, 2, 0, 1.5)],
+      ["autoClicker08", new UpgradeState(10000, 2, 0, 1.5)],
+      ["autoClicker09", new UpgradeState(20000, 2, 0, 2)],
+      ["autoClicker10", new UpgradeState(20000, 2, 0, 2)],
       //ref card
       ["refClicker01", new UpgradeState(500, 2, 0, 1)],
       ["refClicker02", new UpgradeState(1500, 2, 0, 1.5)],
@@ -133,7 +136,10 @@ export function Nortask() {
       ["refClicker06", new UpgradeState(1500, 2, 0, 1.5)],
       ["refClicker07", new UpgradeState(4000, 2, 0, 2)],
       ["refClicker08", new UpgradeState(8000, 2, 0, 2.5)],
-      ["refClicker09", new UpgradeState(15000, 2, 0, 3)],
+      ["refClicker09", new UpgradeState(18000, 2, 0, 3)],
+      ["refClicker10", new UpgradeState(3000, 2, 0, 1.5)],
+      ["refClicker11", new UpgradeState(3000, 2, 0, 1.5)],
+      ["refClicker12", new UpgradeState(18000, 2, 0, 3)],
     ])
   );
 
@@ -154,6 +160,9 @@ export function Nortask() {
         upgradeMap.current.get("autoClicker05")!.increment +
         upgradeMap.current.get("autoClicker06")!.increment +
         upgradeMap.current.get("autoClicker07")!.increment +
+        upgradeMap.current.get("autoClicker08")!.increment +
+        upgradeMap.current.get("autoClicker09")!.increment +
+        upgradeMap.current.get("autoClicker10")!.increment +
         //ref card
         upgradeMap.current.get("refClicker01")!.increment +
         upgradeMap.current.get("refClicker02")!.increment +
@@ -163,7 +172,10 @@ export function Nortask() {
         upgradeMap.current.get("refClicker06")!.increment +
         upgradeMap.current.get("refClicker07")!.increment +
         upgradeMap.current.get("refClicker08")!.increment +
-        upgradeMap.current.get("refClicker09")!.increment) *
+        upgradeMap.current.get("refClicker09")!.increment +
+        upgradeMap.current.get("refClicker10")!.increment +
+        upgradeMap.current.get("refClicker11")!.increment +
+        upgradeMap.current.get("refClicker12")!.increment) *
         100
     ) / 100;
 
