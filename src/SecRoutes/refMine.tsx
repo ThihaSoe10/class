@@ -243,6 +243,7 @@ export function Refmine() {
         balanceRef={balanceRef}
         upgradeMap={upgradeMap}
         upgradeEnergyMap={upgradeEnergyMap}
+        userId={userId}
       />
       <ShareBal
         balanceRef={balanceRef}

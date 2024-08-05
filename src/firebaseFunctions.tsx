@@ -140,3 +140,44 @@ export const getUserInviteCount = async (userId: string) => {
   }
   // return 0;
 };
+
+export const saveUserDataToFirebase = (userId: string, data: any) => {
+  if (!userId) return;
+
+  const userRef = ref(db, 'users/' + userId);
+
+  const structuredData = {
+    // autoIncrement: data.autoIncrement || 0,
+    // inviteCount: data.inviteCount || 0,
+    upgrades: {
+      clickUpgrade: data.upgrades?.clickUpgrade || 0,
+      autoClicker01: data.upgrades?.autoClicker01 || 0,
+      autoClicker02: data.upgrades?.autoClicker02 || 0,
+      autoClicker03: data.upgrades?.autoClicker03 || 0,
+      autoClicker04: data.upgrades?.autoClicker04 || 0,
+      autoClicker05: data.upgrades?.autoClicker05 || 0,
+      autoClicker06: data.upgrades?.autoClicker06 || 0,
+      autoClicker07: data.upgrades?.autoClicker07 || 0,
+      autoClicker08: data.upgrades?.autoClicker08 || 0,
+      autoClicker09: data.upgrades?.autoClicker09 || 0,
+      autoClicker10: data.upgrades?.autoClicker10 || 0,
+      refClicker01: data.upgrades?.refClicker01 || 0,
+      refClicker02: data.upgrades?.refClicker02 || 0,
+      refClicker03: data.upgrades?.refClicker03 || 0,
+      refClicker04: data.upgrades?.refClicker04 || 0,
+      refClicker05: data.upgrades?.refClicker05 || 0,
+      refClicker06: data.upgrades?.refClicker06 || 0,
+      refClicker07: data.upgrades?.refClicker07 || 0,
+      refClicker08: data.upgrades?.refClicker08 || 0,
+      refClicker09: data.upgrades?.refClicker09 || 0,
+      refClicker10: data.upgrades?.refClicker10 || 0,
+      refClicker11: data.upgrades?.refClicker11 || 0,
+      refClicker12: data.upgrades?.refClicker12 || 0,
+    },
+    lastUpdated: data.lastUpdated || new Date().getTime(),
+  };
+
+  update(userRef, structuredData).catch((error) => {
+    console.error("Error saving user data:", error);
+  });
+};

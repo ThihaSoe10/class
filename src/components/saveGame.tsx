@@ -2,6 +2,7 @@ import { Button, Box, Typography, Modal, Snackbar } from "@mui/material";
 import UpgradeState from "../classes/upgradeState";
 import React, { useEffect, useRef } from "react";
 import UpgradeEnergy from "../classes/upgradeEnergy";
+import { saveUserDataToFirebase } from '../firebaseFunctions'; // Import your Firebase function
 
 const style = {
   position: "absolute" as "absolute",
@@ -19,6 +20,7 @@ export function SaveGame(props: {
   balanceRef: React.MutableRefObject<{ value: number }>;
   upgradeMap: React.MutableRefObject<Map<string, UpgradeState>>;
   upgradeEnergyMap: React.MutableRefObject<Map<string, UpgradeEnergy>>;
+  userId: string | null  // Assuming you're passing userId as a prop
 }) {
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
   function handleSave() {
@@ -120,17 +122,58 @@ export function SaveGame(props: {
       JSON.stringify(props.upgradeMap.current.get("refClicker12")!.level)
     );
     // console.log("Game saved");
-    localStorage.setItem(
-      "pool",
-      JSON.stringify(props.upgradeEnergyMap.current.get("energyPool")!.level)
-    );
-    localStorage.setItem(
-      "refill",
-      JSON.stringify(props.upgradeEnergyMap.current.get("energyfill")!.level)
-    );
+    // localStorage.setItem(
+    //   "pool",
+    //   JSON.stringify(props.upgradeEnergyMap.current.get("energyPool")!.level)
+    // );
+    // localStorage.setItem(
+    //   "refill",
+    //   JSON.stringify(props.upgradeEnergyMap.current.get("energyfill")!.level)
+    // );
     //console.log("Game setitem");
     // original// setOpenSnackbar(true);
-    setOpenSnackbar(false);
+    // setOpenSnackbar(false);
+    const firebaseData = {
+      balance: props.balanceRef.current.value,
+      upgrades: {
+        clickUpgrade: props.upgradeMap.current.get('clickUpgrade')!.level,
+        autoClicker01: props.upgradeMap.current.get('autoClicker01')!.level,
+        autoClicker02: props.upgradeMap.current.get('autoClicker02')!.level,
+        autoClicker03: props.upgradeMap.current.get('autoClicker03')!.level,
+        autoClicker04: props.upgradeMap.current.get('autoClicker04')!.level,
+        autoClicker05: props.upgradeMap.current.get('autoClicker05')!.level,
+        autoClicker06: props.upgradeMap.current.get('autoClicker06')!.level,
+        autoClicker07: props.upgradeMap.current.get('autoClicker07')!.level,
+        autoClicker08: props.upgradeMap.current.get('autoClicker08')!.level,
+        autoClicker09: props.upgradeMap.current.get('autoClicker09')!.level,
+        autoClicker10: props.upgradeMap.current.get('autoClicker10')!.level,
+        refClicker01: props.upgradeMap.current.get('refClicker01')!.level,
+        refClicker02: props.upgradeMap.current.get('refClicker02')!.level,
+        refClicker03: props.upgradeMap.current.get('refClicker03')!.level,
+        refClicker04: props.upgradeMap.current.get('refClicker04')!.level,
+        refClicker05: props.upgradeMap.current.get('refClicker05')!.level,
+        refClicker06: props.upgradeMap.current.get('refClicker06')!.level,
+        refClicker07: props.upgradeMap.current.get('refClicker07')!.level,
+        refClicker08: props.upgradeMap.current.get('refClicker08')!.level,
+        refClicker09: props.upgradeMap.current.get('refClicker09')!.level,
+        refClicker10: props.upgradeMap.current.get('refClicker10')!.level,
+        refClicker11: props.upgradeMap.current.get('refClicker11')!.level,
+        refClicker12: props.upgradeMap.current.get('refClicker12')!.level,
+      },
+      //upgradeEnergy: {
+        //energyPool: props.upgradeEnergyMap.current.get('energyPool')!.level,
+    //energyFill: props.upgradeEnergyMap.current.get('energyfill')!.level,
+      //},
+      lastUpdated: new Date().getTime(),
+    };
+
+    // Save data to Firebase if userId is not null
+    if (props.userId) {
+      saveUserDataToFirebase(props.userId, firebaseData);
+      setOpenSnackbar(false);
+    } else {
+      console.error("Cannot save data: userId is null.");
+    }
   }
   function handleLoad() {
     props.balanceRef.current.value = parseInt(
