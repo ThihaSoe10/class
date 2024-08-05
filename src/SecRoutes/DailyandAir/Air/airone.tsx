@@ -9,12 +9,18 @@ interface AironeProps {
   onRewardClaimed: () => void;
 }
 
-const Airone: React.FC<AironeProps> = ({ userId, balanceRef, onRewardClaimed }) => {
-  const [taskState, setTaskState] = useState<'go' | 'check' | 'countdown' | 'claim' | 'done'>('go');
+const Airone: React.FC<AironeProps> = ({
+  userId,
+  balanceRef,
+  onRewardClaimed,
+}) => {
+  const [taskState, setTaskState] = useState<
+    "go" | "check" | "countdown" | "claim" | "done"
+  >("go");
   const [countdown, setCountdown] = useState(20);
   const [clickUpgradeLevel, setClickUpgradeLevel] = useState<number>(0);
   const [initialLoad, setInitialLoad] = useState(true);
-  const Airreward = 100000 // Reward values
+  const Airreward = 100000; // Reward values
 
   useEffect(() => {
     if (userId) {
@@ -75,22 +81,46 @@ const Airone: React.FC<AironeProps> = ({ userId, balanceRef, onRewardClaimed }) 
 
   const renderButton = () => {
     if (taskState === "done") {
-      return <button className="taskdone" disabled>✔️</button>;
+      return (
+        <button className="taskdone" disabled>
+          ✔️
+        </button>
+      );
     } else if (clickUpgradeLevel === 19) {
       switch (taskState) {
         case "go":
-          return <button className="taskgo" onClick={handleGoClick}>Go</button>;
+          return (
+            <button className="taskgo" onClick={handleGoClick}>
+              Go
+            </button>
+          );
         case "check":
-          return <button className="taskcheck" onClick={handleCheckClick}>Check</button>;
+          return (
+            <button className="taskcheck" onClick={handleCheckClick}>
+              Check
+            </button>
+          );
         case "countdown":
-          return <button className="taskcount" disabled>{countdown}s</button>;
+          return (
+            <button className="taskcount" disabled>
+              {countdown}s
+            </button>
+          );
         case "claim":
-          return <button className="taskclaim" onClick={handleClaimClick}>Claim</button>;
+          return (
+            <button className="taskclaim" onClick={handleClaimClick}>
+              Claim
+            </button>
+          );
         default:
           return null;
       }
     } else {
-      return <button className="taskgo" disabled>Go</button>;
+      return (
+        <button className="taskgo" disabled>
+          Go
+        </button>
+      );
     }
   };
 
@@ -98,7 +128,7 @@ const Airone: React.FC<AironeProps> = ({ userId, balanceRef, onRewardClaimed }) 
     <div className="task-box">
       <span className="taskspan">
         <p className="taskp">
-          <span>Need to upgrade to level 19 (100K)</span>
+          <span>Need to upgrade Tapbooster to level 19 (100K)</span>
           <span>{renderButton()}</span>
         </p>
       </span>
