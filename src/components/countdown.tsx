@@ -10,9 +10,10 @@ interface TimeLeft {
 
 interface CountdownProps {
   targetDate: string;
+  name: string;
 }
 
-const Countdown: React.FC<CountdownProps> = ({ targetDate }) => {
+const Countdown: React.FC<CountdownProps> = ({ targetDate, name }) => {
   const calculateTimeLeft = (): TimeLeft => {
     const difference = +new Date(targetDate) - +new Date();
     let timeLeft: TimeLeft = {};
@@ -45,7 +46,7 @@ const Countdown: React.FC<CountdownProps> = ({ targetDate }) => {
 
   return (
     <div className="countdown-container">
-      <h2>Airdrop will end on</h2>
+      <h2>{name} will end on</h2>
       <div className="countdown">
         {timeLeft.days !== undefined && (
           <span>{formatTime(timeLeft.days)}:</span>
