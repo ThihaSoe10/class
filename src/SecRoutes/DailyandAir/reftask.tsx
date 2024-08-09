@@ -3,11 +3,11 @@ import React, { useRef, useEffect, useReducer, useState } from "react";
 import UpgradeState from "../../classes/upgradeState";
 import UpgradeEnergy from "../../classes/upgradeEnergy";
 //for Task
-import TaskCard from "../../components/TaskCard/taskcard";
+import RefTaskCard from "../../components/TaskCard/reftaskcard";
 //fire base
 //import { sendUserDataToFirebase,updateUserAutoIncrementInFirebase} from '../firebaseFunctions';
 
-export function Nortask() {
+export function Reftask() {
   const balanceRef = useRef({ value: 0 });
   const forceUpdate = useReducer((x) => x + 1, 0)[1];
 
@@ -113,7 +113,6 @@ export function Nortask() {
 
   //up is user
 
-  //routuerchange1
   const upgradeMap = useRef(
     new Map<string, UpgradeState>([
       ["clickUpgrade", new UpgradeState(15, 2, 1, 2)],
@@ -257,66 +256,116 @@ export function Nortask() {
   return (
     <>
       <div className=" Task row">
-        <h2>Follow Our Social And Get More Coin </h2>
+        <h2>Invite Friends and earn Rewards</h2>
         <div className="col-sm col-md-6 col-lg-4">
-          <TaskCard
-            name="Join Telegram Channel"
-            reward={20000}
-            show="20000"
-            link="https://t.me/bitbrawlofficial"
+          <RefTaskCard
+            name="invite 1 friend"
+            reward={10000}
+            show="10k"
+            refercount={1}
+            userId={userId}
             balanceRef={balanceRef}
             onRewardClaimed={handleRewardClaimed}
           />
         </div>
         <div className="col-sm col-md-6 col-lg-4">
-          <TaskCard
-            name="Follow on X"
-            reward={20000}
-            show="20000"
-            link="https://x.com/MYGTOfficial"
+          <RefTaskCard
+            name="invite 2 friends"
+            reward={30000}
+            show="30k"
+            refercount={2}
+            userId={userId}
             balanceRef={balanceRef}
             onRewardClaimed={handleRewardClaimed}
           />
         </div>
         <div className="col-sm col-md-6 col-lg-4">
-          <TaskCard
-            name="Join Discord"
-            reward={20000}
-            show="20000"
-            link="https://discord.gg/9fUdJNkw"
+          <RefTaskCard
+            name="invite 3 friends"
+            reward={50000}
+            show="50k"
+            refercount={3}
+            userId={userId}
             balanceRef={balanceRef}
             onRewardClaimed={handleRewardClaimed}
           />
         </div>
         <div className="col-sm col-md-6 col-lg-4">
-          <TaskCard
-            name="Join Facebook Group"
-            reward={20000}
-            show="20000"
-            link="https://www.facebook.com/groups/470807745715163/?ref=share&mibextid=CTbP7E"
+          <RefTaskCard
+            name="invite 5 friends"
+            reward={100000}
+            show="100k"
+            refercount={5}
+            userId={userId}
             balanceRef={balanceRef}
             onRewardClaimed={handleRewardClaimed}
           />
         </div>
         <div className="col-sm col-md-6 col-lg-4">
-          <TaskCard
-            name="Retweet NFT post on X"
-            reward={20000}
-            show="20000"
-            link="https://x.com/MYGTOfficial/status/1821944606868550125"
+          <RefTaskCard
+            name="invite 8 friends"
+            reward={300000}
+            show="300k"
+            refercount={8}
+            userId={userId}
             balanceRef={balanceRef}
             onRewardClaimed={handleRewardClaimed}
           />
         </div>
         <div className="col-sm col-md-6 col-lg-4">
-          <TaskCard
-            name="Join our telegram community"
-            reward={20000}
-            show="20000"
-            link="https://t.me/+R31MCNOSSC0zYjk1"
+          <RefTaskCard
+            name="invite 10 friends"
+            reward={800000}
+            show="800k"
+            refercount={10}
+            userId={userId}
             balanceRef={balanceRef}
             onRewardClaimed={handleRewardClaimed}
           />
+        </div>
+        <div className="col-sm col-md-6 col-lg-4">
+          <RefTaskCard
+            name="invite 15 friends"
+            reward={1500000}
+            show="1.5M"
+            refercount={15}
+            userId={userId}
+            balanceRef={balanceRef}
+            onRewardClaimed={handleRewardClaimed}
+          />
+        </div>
+        <div className="col-sm col-md-6 col-lg-4">
+          <RefTaskCard
+            name="invite 25 friends"
+            reward={3000000}
+            show="3M"
+            refercount={25}
+            userId={userId}
+            balanceRef={balanceRef}
+            onRewardClaimed={handleRewardClaimed}
+          />
+          <div className="col-sm col-md-6 col-lg-4">
+          <RefTaskCard
+            name="invite 50 friends"
+            reward={10000000}
+            show="10M"
+            refercount={50}
+            userId={userId}
+            balanceRef={balanceRef}
+            onRewardClaimed={handleRewardClaimed}
+          />
+        </div>
+        <div className="col-sm col-md-6 col-lg-4">
+          <RefTaskCard
+            name="invite 100 friends"
+            reward={100000000}
+            show="100M"
+            refercount={100}
+            userId={userId}
+            balanceRef={balanceRef}
+            onRewardClaimed={handleRewardClaimed}
+          />
+        </div>
         </div>
         {/* // */}
       </div>
