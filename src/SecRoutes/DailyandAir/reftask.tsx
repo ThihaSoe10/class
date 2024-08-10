@@ -139,6 +139,8 @@ export function Reftask() {
       ["refClicker10", new UpgradeState(3000, 2, 0, 1.5)],
       ["refClicker11", new UpgradeState(3000, 2, 0, 1.5)],
       ["refClicker12", new UpgradeState(18000, 2, 0, 3)],
+      ["refClicker13", new UpgradeState(8000, 2, 0, 2.5)],
+      ["refClicker14", new UpgradeState(30000, 2, 0, 3.5)],
     ])
   );
 
@@ -174,7 +176,9 @@ export function Reftask() {
         upgradeMap.current.get("refClicker09")!.increment +
         upgradeMap.current.get("refClicker10")!.increment +
         upgradeMap.current.get("refClicker11")!.increment +
-        upgradeMap.current.get("refClicker12")!.increment) *
+        upgradeMap.current.get("refClicker12")!.increment +
+        upgradeMap.current.get("refClicker13")!.increment +
+        upgradeMap.current.get("refClicker14")!.increment ) *
         100
     ) / 100;
 

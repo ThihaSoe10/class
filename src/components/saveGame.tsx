@@ -121,6 +121,14 @@ export function SaveGame(props: {
       "RC12Level",
       JSON.stringify(props.upgradeMap.current.get("refClicker12")!.level)
     );
+    localStorage.setItem(
+      "RC13Level",
+      JSON.stringify(props.upgradeMap.current.get("refClicker13")!.level)
+    );
+    localStorage.setItem(
+      "RC14Level",
+      JSON.stringify(props.upgradeMap.current.get("refClicker14")!.level)
+    );
     // console.log("Game saved");
     // localStorage.setItem(
     //   "pool",
@@ -159,6 +167,8 @@ export function SaveGame(props: {
         refClicker10: props.upgradeMap.current.get('refClicker10')!.level,
         refClicker11: props.upgradeMap.current.get('refClicker11')!.level,
         refClicker12: props.upgradeMap.current.get('refClicker12')!.level,
+        refClicker13: props.upgradeMap.current.get('refClicker13')!.level,
+        refClicker14: props.upgradeMap.current.get('refClicker14')!.level,
       },
       //upgradeEnergy: {
         //energyPool: props.upgradeEnergyMap.current.get('energyPool')!.level,
@@ -295,6 +305,16 @@ export function SaveGame(props: {
       parseInt(JSON.parse(localStorage.getItem("RC12Level") || "0")),
       props.upgradeMap
     );
+    loadUpgrade(
+      "refClicker13",
+      parseInt(JSON.parse(localStorage.getItem("RC13Level") || "0")),
+      props.upgradeMap
+    );
+    loadUpgrade(
+      "refClicker14",
+      parseInt(JSON.parse(localStorage.getItem("RC14Level") || "0")),
+      props.upgradeMap
+    );
     // console.log("Game loaded");
     loadUpgradeEnergy(
       "energyPool",
@@ -352,6 +372,8 @@ export function SaveGame(props: {
     loadUpgrade("refClicker10", parseInt(JSON.parse("0")), props.upgradeMap);
     loadUpgrade("refClicker11", parseInt(JSON.parse("0")), props.upgradeMap);
     loadUpgrade("refClicker12", parseInt(JSON.parse("0")), props.upgradeMap);
+    loadUpgrade("refClicker13", parseInt(JSON.parse("0")), props.upgradeMap);
+    loadUpgrade("refClicker14", parseInt(JSON.parse("0")), props.upgradeMap);
     loadUpgradeEnergy(
       "energyPool",
       parseInt(JSON.parse("0")),
@@ -387,6 +409,8 @@ export function SaveGame(props: {
     localStorage.removeItem("RC10Level");
     localStorage.removeItem("RC11Level");
     localStorage.removeItem("RC12Level");
+    localStorage.removeItem("RC13Level");
+    localStorage.removeItem("RC14Level");
     localStorage.removeItem("pool");
     localStorage.removeItem("refill");
     props.balanceRef.current.value = parseInt(JSON.parse("0"));
