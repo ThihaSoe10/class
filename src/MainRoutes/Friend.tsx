@@ -6,6 +6,7 @@ import React, { useRef, useEffect, useReducer, useState } from "react";
 // import { SaveGame } from "../components/saveGame";
 //for Task
 import Refer from "../components/RefFriends/ref";
+import { Leaderboard } from "./Leaderboard";
 //fire base
 //import { sendUserDataToFirebase,updateUserAutoIncrementInFirebase} from '../firebaseFunctions';
 
@@ -203,16 +204,17 @@ export function Friend() {
   return (
     <>
       <div className="overlay">
-        <div className="container-fluid">
-          <div className="Ref_box">
-            {userId && (
-              <Refer
-                userId={userId}
-                balanceRef={balanceRef}
-                onRewardClaimed={handleRewardClaimed}
-              />
-            )}
-          </div>
+        <div className="Ref_box">
+          {userId && (
+            <Refer
+              userId={userId}
+              balanceRef={balanceRef}
+              onRewardClaimed={handleRewardClaimed}
+            />
+          )}
+        </div>
+        <div className="center">
+          <Leaderboard userId={userId} />
         </div>
       </div>
     </>
