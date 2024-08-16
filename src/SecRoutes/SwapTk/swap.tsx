@@ -253,7 +253,7 @@ const Swap: React.FC<ExchangeProps> = ({ autoIncrement, userId }) => {
       <p>
         {totalTokens} * 0.5 ~ {inusdt} usdt
       </p>
-      {clickUpgradeLevel > 15 && totalValue > 18 && (
+      {clickUpgradeLevel > 18 && totalValue > 18 && (
         <div className="exchange">
           <div className="exbox1">
             <input
