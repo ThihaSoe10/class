@@ -1,22 +1,19 @@
 import React, { useRef, useEffect, useReducer, useState } from "react";
 //for ts
-import UpgradeState from "../classes/upgradeState";
-import UpgradeEnergy from "../classes/upgradeEnergy";
+import UpgradeState from "../../classes/upgradeState";
+import UpgradeEnergy from "../../classes/upgradeEnergy";
 //
-import { ClickHandler } from "../components/clickHandler";
-import { DisplayStats } from "../components/ShareBalance/displayStats";
-import { SaveGame } from "../components/saveGame";
-//for booster
-import UpgradeClick from "../components/click/upgradeClick";
+import { SaveGame } from "../../components/saveGame";
 //firebase
-import { sendUserDataToFirebase,updateUserAutoIncrementInFirebase} from '../firebaseFunctions';
+import {
+  sendUserDataToFirebase,
+  updateUserAutoIncrementInFirebase,
+} from "../../firebaseFunctions";
+//wallet
+import { db } from "../../firebase";
 import { ref, onValue } from "firebase/database";
-import { db } from '../firebase';
-//countdown
-import Countdown from "../components/countdown";
-import banner from "../assets/banner1.png";
 
-export function Coin() {
+export function TransferMain() {
   const balanceRef = useRef({ value: 0 });
   const forceUpdate = useReducer((x) => x + 1, 0)[1];
 
@@ -26,8 +23,9 @@ export function Coin() {
   const [lastUpdated, setLastUpdated] = useState(Date.now());
   //user
   const [userId, setUserId] = useState<string | null>(null);
-//D4
-const [localTotalExchange, setLocalTotalExchange] = useState<number>(0); // Local version of totalExchange
+  //D4
+  const [localTotalExchange, setLocalTotalExchange] = useState<number>(0); // Local version of totalExchange
+  //
   const [isInitialLoad, setIsInitialLoad] = useState(true); // Flag to check if initial load is done
 
   // Load state from localStorage on mount For energy and autoincrement on window close
@@ -40,7 +38,7 @@ const [localTotalExchange, setLocalTotalExchange] = useState<number>(0); // Loca
     const storedBalance = localStorage.getItem("balance");
     const storedAutoIncrement = localStorage.getItem("autoIncrement");
     //D4
-const storedLocalTotalExchange = localStorage.getItem('localTotalExchange'); // Load local totalExchange
+    const storedLocalTotalExchange = localStorage.getItem("localTotalExchange"); // Load local totalExchange
 
     if (
       storedEnergy &&
@@ -77,9 +75,9 @@ const storedLocalTotalExchange = localStorage.getItem('localTotalExchange'); // 
         );
       balanceRef.current.value = Math.round(calculatedBalance * 100) / 100;
       //D4
-if (storedLocalTotalExchange) {
-  setLocalTotalExchange(parseFloat(storedLocalTotalExchange));
-}
+      if (storedLocalTotalExchange) {
+        setLocalTotalExchange(parseFloat(storedLocalTotalExchange));
+      }
     }
     setIsInitialLoad(false); // Set initial load flag to false after loading from localStorage
   }, []);
@@ -95,9 +93,17 @@ if (storedLocalTotalExchange) {
       localStorage.setItem("balance", balanceRef.current.value.toString());
       localStorage.setItem("autoIncrement", autoIncrement.toString());
       //D4
-localStorage.setItem('localTotalExchange', localTotalExchange.toString());
+      localStorage.setItem("localTotalExchange", localTotalExchange.toString());
     }
-  }, [energy, maxEnergy, refillRate, lastUpdated, isInitialLoad,localTotalExchange]);
+  }, [
+    energy,
+    maxEnergy,
+    refillRate,
+    lastUpdated,
+    isInitialLoad,
+    localTotalExchange,
+  ]);
+
   useEffect(() => {
     // Initialize the Telegram Web App SDK
     const initTelegram = () => {
@@ -130,23 +136,24 @@ localStorage.setItem('localTotalExchange', localTotalExchange.toString());
   }, []);
 
   //up is user
+
   //D4
-useEffect(() => {
-  if (userId) {
-    const exchangeRef = ref(db, `users/${userId}/exchanges/amount`);
+  useEffect(() => {
+    if (userId) {
+      const exchangeRef = ref(db, `users/${userId}/exchanges/amount`);
 
-    const unsubscribe = onValue(exchangeRef, (snapshot) => {
-      const amount = snapshot.val();
-      setLocalTotalExchange((amount || 0) / 3600);
-      //alert(`Exchange amount updated: ${amount}`);
-    });
+      const unsubscribe = onValue(exchangeRef, (snapshot) => {
+        const amount = snapshot.val();
+        setLocalTotalExchange((amount || 0) / 3600);
+        // alert(`Exchange amount updated: ${amount}`);
+      });
 
-    // Cleanup the subscription on unmount
-    return () => unsubscribe();
-  }
-}, [userId]);
+      // Cleanup the subscription on unmount
+      return () => unsubscribe();
+    }
+  }, [userId]);
 
-  //routuerchange1
+  //routuerchange
   const upgradeMap = useRef(
     new Map<string, UpgradeState>([
       ["clickUpgrade", new UpgradeState(15, 2, 1, 2)],
@@ -212,9 +219,11 @@ useEffect(() => {
         upgradeMap.current.get("refClicker11")!.increment +
         upgradeMap.current.get("refClicker12")!.increment +
         upgradeMap.current.get("refClicker13")!.increment +
-        upgradeMap.current.get("refClicker14")!.increment ) *
+        upgradeMap.current.get("refClicker14")!.increment) *
         100
-    ) / 100 -localTotalExchange;
+    ) /
+      100 -
+    localTotalExchange;
 
   //downdatabase
   useEffect(() => {
@@ -272,90 +281,14 @@ useEffect(() => {
 
   return (
     <>
-      <div className="overlay">
-        <div
-          className="container-fluid"
-          style={{ paddingLeft: "0", paddingRight: "0" }}
-        >
-          <Countdown targetDate="2024-10-31T23:59:59" name="Airdrop" />
+      <SaveGame
+        balanceRef={balanceRef}
+        upgradeMap={upgradeMap}
+        upgradeEnergyMap={upgradeEnergyMap}
+        userId={userId}
+      />
 
-          <a href="https://opensea.io/collection/mythical-gladiator">
-            <img
-              src={banner}
-              alt="airdropbanner"
-              style={{ width: "100%", height: "140px", paddingTop: "15px" }}
-            />
-          </a>
-          <ClickHandler
-            balanceRef={balanceRef}
-            increment={upgradeMap.current.get("clickUpgrade")!.increment}
-            energy={energy}
-            maxEnergy={maxEnergy}
-            setEnergy={setEnergy}
-          />
-          <DisplayStats
-            balanceRef={balanceRef}
-            clickIncrement={upgradeMap.current.get("clickUpgrade")!.increment}
-            autoIncrement={autoIncrement}
-            refillRate={refillRate}
-          />
-          <SaveGame
-            balanceRef={balanceRef}
-            upgradeMap={upgradeMap}
-            upgradeEnergyMap={upgradeEnergyMap}
-            userId={userId}
-          />
-
-          {/*2r second row for Booster */}
-          <div className="booster">
-            <h2>Booster</h2>
-            <UpgradeClick
-              id="clickUpgrade"
-              name="Tab Booster"
-              level={upgradeMap.current.get("clickUpgrade")!.level}
-              cost={upgradeMap.current.get("clickUpgrade")!.currentCost}
-              increment={upgradeMap.current.get("clickUpgrade")!.incrementAdd}
-              balance={balanceRef.current.value}
-              autoIncrementTotal={autoIncrement}
-              clickHandler={(id) => {
-                upgradeInvocationHandler(
-                  id,
-                  upgradeMap,
-                  upgradeEnergyMap,
-                  balanceRef,
-                  setMaxEnergy,
-                  setRefillRate
-                );
-              }}
-            />
-            {/* <div className="col-sm-6 col-md-6 col-lg-4">
-            <EnergyFill
-                id="energyfill"
-                name="Energy Refill"
-              
-                level={upgradeEnergyMap.current.get('energyfill')!.level}
-                cost={upgradeEnergyMap.current.get('energyfill')!.currentCost}
-                increment={upgradeEnergyMap.current.get('energyfill')!.energyRefillIncrement}
-                balance={balanceRef.current.value}
-                autoIncrementTotal={autoIncrement}
-                clickHandler={(id) => { upgradeInvocationHandler(id, upgradeMap, upgradeEnergyMap, balanceRef, setMaxEnergy, setRefillRate); }}
-              /> 
-            </div>
-            <div className="col-sm-6 col-md-6 col-lg-4">
-            <UpgradePool
-              id="energyPool"
-              name="Energy Pool"
-              level={upgradeEnergyMap.current.get('energyPool')!.level}
-              cost={upgradeEnergyMap.current.get('energyPool')!.currentCost}
-              increment={upgradeEnergyMap.current.get('energyPool')!.maxEnergyIncrement}
-              balance={balanceRef.current.value}
-              autoIncrementTotal={autoIncrement}
-              clickHandler={(id) => { upgradeInvocationHandler(id, upgradeMap, upgradeEnergyMap, balanceRef, setMaxEnergy, setRefillRate); }}
-            />
-            </div> */}
-          </div>
-        </div>
-      </div>
+      <h4 style={{ marginTop: "6rem" }}>Coming Soon</h4>
     </>
   );
 }

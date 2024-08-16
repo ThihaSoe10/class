@@ -7,6 +7,11 @@ import UpgradeButton from "../components/Cards/upgradeButton";
 import { ShareBal } from "../components/ShareBalance/sharebalance";
 import { SaveGame } from "../components/saveGame";
 
+//firebase
+import { sendUserDataToFirebase,updateUserAutoIncrementInFirebase} from '../firebaseFunctions';
+import { ref, onValue } from "firebase/database";
+import { db } from '../firebase';
+
 export function Freemine() {
   const balanceRef = useRef({ value: 0 });
   const forceUpdate = useReducer((x) => x + 1, 0)[1];
@@ -17,6 +22,8 @@ export function Freemine() {
   const [lastUpdated, setLastUpdated] = useState(Date.now());
   //user
   const [userId, setUserId] = useState<string | null>(null);
+  //D4
+const [localTotalExchange, setLocalTotalExchange] = useState<number>(0); // Local version of totalExchange
 
   const [isInitialLoad, setIsInitialLoad] = useState(true); // Flag to check if initial load is done
 
@@ -29,6 +36,8 @@ export function Freemine() {
     //down is for autoincrement
     const storedBalance = localStorage.getItem("balance");
     const storedAutoIncrement = localStorage.getItem("autoIncrement");
+    //D4
+const storedLocalTotalExchange = localStorage.getItem('localTotalExchange'); // Load local totalExchange
 
     if (
       storedEnergy &&
@@ -64,6 +73,10 @@ export function Freemine() {
           storedAutoIncrementNum * 7200
         );
       balanceRef.current.value = Math.round(calculatedBalance * 100) / 100;
+      //D4
+if (storedLocalTotalExchange) {
+  setLocalTotalExchange(parseFloat(storedLocalTotalExchange));
+}
     }
     setIsInitialLoad(false); // Set initial load flag to false after loading from localStorage
   }, []);
@@ -78,40 +91,57 @@ export function Freemine() {
       //down is auto increment
       localStorage.setItem("balance", balanceRef.current.value.toString());
       localStorage.setItem("autoIncrement", autoIncrement.toString());
+     //D4
+localStorage.setItem('localTotalExchange', localTotalExchange.toString());
+}
+}, [energy, maxEnergy, refillRate, lastUpdated, isInitialLoad,localTotalExchange]);
+  useEffect(() => {
+    // Initialize the Telegram Web App SDK
+    const initTelegram = () => {
+      const tg = window.Telegram.WebApp;
+      tg.ready();
+      // Debug logging
+      console.log('Telegram Web App SDK initialized');
+      console.log('tg.initDataUnsafe:', tg.initDataUnsafe);
+
+      const user = tg.initDataUnsafe?.user;
+
+      if (user) {
+        const id = user.id.toString();
+        setUserId(user.id.toString());
+        sendUserDataToFirebase(id, autoIncrement);
+      }
+    };
+
+    if (window.Telegram) {
+      console.log('Telegram SDK is already loaded');
+      initTelegram();
+    } else {
+      console.log('Waiting for Telegram SDK to be ready');
+      window.addEventListener('TelegramWebAppReady', initTelegram);
     }
-  }, [energy, maxEnergy, refillRate, lastUpdated, isInitialLoad]);
-  // useEffect(() => {
-  //   // Initialize the Telegram Web App SDK
-  //   const initTelegram = () => {
-  //     const tg = window.Telegram.WebApp;
-  //     tg.ready();
-  //     // Debug logging
-  //     console.log('Telegram Web App SDK initialized');
-  //     console.log('tg.initDataUnsafe:', tg.initDataUnsafe);
 
-  //     const user = tg.initDataUnsafe?.user;
-
-  //     if (user) {
-  //       const id = user.id.toString();
-  //       setUserId(user.id.toString());
-  //       sendUserDataToFirebase(id, autoIncrement);
-  //     }
-  //   };
-
-  //   if (window.Telegram) {
-  //     console.log('Telegram SDK is already loaded');
-  //     initTelegram();
-  //   } else {
-  //     console.log('Waiting for Telegram SDK to be ready');
-  //     window.addEventListener('TelegramWebAppReady', initTelegram);
-  //   }
-
-  //   return () => {
-  //     window.removeEventListener('TelegramWebAppReady', initTelegram);
-  //   };
-  // }, []);
+    return () => {
+      window.removeEventListener('TelegramWebAppReady', initTelegram);
+    };
+  }, []);
 
   //up is user
+  //D4
+useEffect(() => {
+  if (userId) {
+    const exchangeRef = ref(db, `users/${userId}/exchanges/amount`);
+
+    const unsubscribe = onValue(exchangeRef, (snapshot) => {
+      const amount = snapshot.val();
+      setLocalTotalExchange((amount || 0) / 3600);
+      //alert(`Exchange amount updated: ${amount}`);
+    });
+
+    // Cleanup the subscription on unmount
+    return () => unsubscribe();
+  }
+}, [userId]);
 
   //routuerchange
   const upgradeMap = useRef(
@@ -181,7 +211,7 @@ export function Freemine() {
         upgradeMap.current.get("refClicker13")!.increment +
         upgradeMap.current.get("refClicker14")!.increment ) *
         100
-    ) / 100;
+    ) / 100 -localTotalExchange;
 
   //downdatabase
   // useEffect(() => {

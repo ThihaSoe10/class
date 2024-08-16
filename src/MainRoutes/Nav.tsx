@@ -6,11 +6,14 @@ export function Nav() {
   return (
     <nav className="Route_nav">
       <ul>
-        <NavLink to="/" className={({ isActive }) => isActive ? "link active" : "link"}>
+        <NavLink
+          to="/"
+          className={({ isActive }) => (isActive ? "link active" : "link")}
+        >
           <li>
             <svg
               xmlns="http://www.w3.org/2000/svg"
-             width="28"
+              width="28"
               height="28"
               className="bi bi-coin"
               viewBox="0 0 16 16"
@@ -21,11 +24,14 @@ export function Nav() {
             </svg>
           </li>
         </NavLink>
-        <NavLink to="/mine" className={({ isActive }) => isActive ? "link active" : "link"}>
+        <NavLink
+          to="/mine"
+          className={({ isActive }) => (isActive ? "link active" : "link")}
+        >
           <li>
             <svg
               xmlns="http://www.w3.org/2000/svg"
-            width="28"
+              width="28"
               height="28"
               className="bi bi-shop"
               viewBox="0 0 16 16"
@@ -34,11 +40,14 @@ export function Nav() {
             </svg>
           </li>
         </NavLink>
-        <NavLink to="/friend" className={({ isActive }) => isActive ? "link active" : "link"}>
+        <NavLink
+          to="/friend"
+          className={({ isActive }) => (isActive ? "link active" : "link")}
+        >
           <li>
             <svg
               xmlns="http://www.w3.org/2000/svg"
-             width="28"
+              width="28"
               height="28"
               className="bi bi-people-fill"
               viewBox="0 0 16 16"
@@ -47,29 +56,40 @@ export function Nav() {
             </svg>
           </li>
         </NavLink>
-        <NavLink to="/tasksec" className={({ isActive }) => isActive ? "link active" : "link"}>
+        <NavLink
+          to="/tasksec"
+          className={({ isActive }) => (isActive ? "link active" : "link")}
+        >
           <li>
             <svg
               xmlns="http://www.w3.org/2000/svg"
-            width="28"
+              width="28"
               height="28"
               className="bi bi-clipboard-check-fill"
               viewBox="0 0 16 16"
             >
-              <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5z"/>
-              <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 3h-3A2.5 2.5 0 0 1 4 1.5v-1zM9.854 9.646a.5.5 0 0 1 0 .708l-2.5 2.5a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 11.293l2.146-2.147a.5.5 0 0 1 .708 0z"/>
+              <path d="M6.5 0A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0zm3 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5z" />
+              <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 3h-3A2.5 2.5 0 0 1 4 1.5v-1zM9.854 9.646a.5.5 0 0 1 0 .708l-2.5 2.5a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 11.293l2.146-2.147a.5.5 0 0 1 .708 0z" />
             </svg>
           </li>
         </NavLink>
-        <NavLink to="/exchange" className={({ isActive }) => isActive ? "link active" : "link"}>
+        <NavLink
+          to="/wallet"
+          className={({ isActive }) => (isActive ? "link active" : "link")}
+        >
           <li>
-          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" className="bi bi-wallet2" viewBox="0 0 16 16">
-  <path d="M12.136.326A1.5 1.5 0 0 1 14 1.78V3h.5A1.5 1.5 0 0 1 16 4.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 13.5v-9a1.5 1.5 0 0 1 1.432-1.499zM5.562 3H13V1.78a.5.5 0 0 0-.621-.484zM1.5 4a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z"/>
-</svg>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="28"
+              height="28"
+              className="bi bi-wallet2"
+              viewBox="0 0 16 16"
+            >
+              <path d="M12.136.326A1.5 1.5 0 0 1 14 1.78V3h.5A1.5 1.5 0 0 1 16 4.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 13.5v-9a1.5 1.5 0 0 1 1.432-1.499zM5.562 3H13V1.78a.5.5 0 0 0-.621-.484zM1.5 4a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5z" />
+            </svg>
           </li>
         </NavLink>
       </ul>
     </nav>
   );
 }
-

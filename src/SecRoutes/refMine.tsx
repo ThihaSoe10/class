@@ -11,6 +11,8 @@ import {
   sendUserDataToFirebase,
   updateUserAutoIncrementInFirebase,
 } from "../firebaseFunctions";
+import { ref, onValue } from "firebase/database";
+import { db } from "../firebase";
 
 export function Refmine() {
   const balanceRef = useRef({ value: 0 });
@@ -22,6 +24,8 @@ export function Refmine() {
   const [lastUpdated, setLastUpdated] = useState(Date.now());
   //user
   const [userId, setUserId] = useState<string | null>(null);
+  //D4
+  const [localTotalExchange, setLocalTotalExchange] = useState<number>(0); // Local version of totalExchange
 
   const [isInitialLoad, setIsInitialLoad] = useState(true); // Flag to check if initial load is done
 
@@ -34,6 +38,8 @@ export function Refmine() {
     //down is for autoincrement
     const storedBalance = localStorage.getItem("balance");
     const storedAutoIncrement = localStorage.getItem("autoIncrement");
+    //D4
+    const storedLocalTotalExchange = localStorage.getItem("localTotalExchange"); // Load local totalExchange
 
     if (
       storedEnergy &&
@@ -69,6 +75,10 @@ export function Refmine() {
           storedAutoIncrementNum * 7200
         );
       balanceRef.current.value = Math.round(calculatedBalance * 100) / 100;
+      //D4
+if (storedLocalTotalExchange) {
+  setLocalTotalExchange(parseFloat(storedLocalTotalExchange));
+}
     }
     setIsInitialLoad(false); // Set initial load flag to false after loading from localStorage
   }, []);
@@ -83,8 +93,10 @@ export function Refmine() {
       //down is auto increment
       localStorage.setItem("balance", balanceRef.current.value.toString());
       localStorage.setItem("autoIncrement", autoIncrement.toString());
-    }
-  }, [energy, maxEnergy, refillRate, lastUpdated, isInitialLoad]);
+   //D4
+localStorage.setItem('localTotalExchange', localTotalExchange.toString());
+}
+}, [energy, maxEnergy, refillRate, lastUpdated, isInitialLoad,localTotalExchange]);
   useEffect(() => {
     // Initialize the Telegram Web App SDK
     const initTelegram = () => {
@@ -117,6 +129,21 @@ export function Refmine() {
   }, []);
 
   //up is user
+  //D4
+useEffect(() => {
+  if (userId) {
+    const exchangeRef = ref(db, `users/${userId}/exchanges/amount`);
+
+    const unsubscribe = onValue(exchangeRef, (snapshot) => {
+      const amount = snapshot.val();
+      setLocalTotalExchange((amount || 0) / 3600);
+      //alert(`Exchange amount updated: ${amount}`);
+    });
+
+    // Cleanup the subscription on unmount
+    return () => unsubscribe();
+  }
+}, [userId]);
 
   //routuerchange
   //routuerchange1
@@ -185,9 +212,9 @@ export function Refmine() {
         upgradeMap.current.get("refClicker11")!.increment +
         upgradeMap.current.get("refClicker12")!.increment +
         upgradeMap.current.get("refClicker13")!.increment +
-        upgradeMap.current.get("refClicker14")!.increment ) *
+        upgradeMap.current.get("refClicker14")!.increment) *
         100
-    ) / 100;
+    ) / 100 -localTotalExchange;
   //downdatabase
   useEffect(() => {
     if (userId !== null) {
