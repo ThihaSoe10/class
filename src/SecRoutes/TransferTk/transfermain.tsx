@@ -12,6 +12,7 @@ import {
 //wallet
 import { db } from "../../firebase";
 import { ref, onValue } from "firebase/database";
+import Transfer from "./transfer";
 
 export function TransferMain() {
   const balanceRef = useRef({ value: 0 });
@@ -288,7 +289,7 @@ export function TransferMain() {
         userId={userId}
       />
 
-      <h4 style={{ marginTop: "6rem" }}>Coming Soon</h4>
+      <Transfer userId={userId} />
     </>
   );
 }
