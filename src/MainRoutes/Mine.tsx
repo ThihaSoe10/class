@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Routes, NavLink, Navigate } from "react-router-dom";
 import { Freemine } from "../SecRoutes/freeMine";
 import { Refmine } from "../SecRoutes/refMine";
-import { Nftmine } from "../SecRoutes/nftmine";
+import { Adsmine } from "../SecRoutes/adsmine";
 import "./SecNavcss/Minenav.css";
 
 export function Mine() {
@@ -34,12 +34,12 @@ export function Mine() {
               </li>
               <li>
                 <NavLink
-                  to="/mine/nftmine"
+                  to="/mine/adsmine"
                   className={({ isActive }) =>
                     isActive ? "minelink active" : "minelink"
                   }
                 >
-                  NFT
+                  ADS
                 </NavLink>
               </li>
             </ul>
@@ -49,7 +49,7 @@ export function Mine() {
             <Route path="/" element={<Navigate to="freemine" />} />
             <Route path="freemine" element={<Freemine />} />
             <Route path="refmine" element={<Refmine />} />
-            <Route path="nftmine" element={<Nftmine />} />
+            <Route path="adsmine" element={<Adsmine />} />
           </Routes>
         </div>
       </div>

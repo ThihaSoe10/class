@@ -3,10 +3,10 @@ import React, { useRef, useEffect, useReducer, useState } from "react";
 import UpgradeState from "../classes/upgradeState";
 import UpgradeEnergy from "../classes/upgradeEnergy";
 //
-import UpgradeButton from "../components/Cards/upgradeButton";
 import { ShareBal } from "../components/ShareBalance/sharebalance";
+import AdsCard from "../components/Cards/AdsCard";
 import { SaveGame } from "../components/saveGame";
-
+//for booster
 //firebase
 import {
   sendUserDataToFirebase,
@@ -14,8 +14,9 @@ import {
 } from "../firebaseFunctions";
 import { ref, onValue } from "firebase/database";
 import { db } from "../firebase";
+//countdown
 
-export function Freemine() {
+export function Adsmine() {
   const balanceRef = useRef({ value: 0 });
   const forceUpdate = useReducer((x) => x + 1, 0)[1];
 
@@ -27,7 +28,6 @@ export function Freemine() {
   const [userId, setUserId] = useState<string | null>(null);
   //D4
   const [localTotalExchange, setLocalTotalExchange] = useState<number>(0); // Local version of totalExchange
-
   const [isInitialLoad, setIsInitialLoad] = useState(true); // Flag to check if initial load is done
 
   // Load state from localStorage on mount For energy and autoincrement on window close
@@ -153,7 +153,7 @@ export function Freemine() {
     }
   }, [userId]);
 
-  //routuerchange
+  //routuerchange1
   const upgradeMap = useRef(
     new Map<string, UpgradeState>([
       ["clickUpgrade", new UpgradeState(15, 2, 1, 2)],
@@ -244,11 +244,11 @@ export function Freemine() {
     localTotalExchange;
 
   //downdatabase
-  // useEffect(() => {
-  //   if (userId !== null) {
-  //     updateUserAutoIncrementInFirebase(userId, autoIncrement);
-  //   }
-  // }, [autoIncrement]);
+  useEffect(() => {
+    if (userId !== null) {
+      updateUserAutoIncrementInFirebase(userId, autoIncrement);
+    }
+  }, [autoIncrement]);
   //updatabse
 
   useEffect(() => {
@@ -296,7 +296,6 @@ export function Freemine() {
   const handleRewardClaimed = () => {
     forceUpdate(); // Force an update to reflect the new balance
   };
-
   return (
     <>
       <SaveGame
@@ -314,12 +313,29 @@ export function Freemine() {
 
       <div className="row center">
         <div className="col-6">
-          <UpgradeButton
-            id="autoClicker01"
-            name="Slime"
-            level={upgradeMap.current.get("autoClicker01")!.level}
-            cost={upgradeMap.current.get("autoClicker01")!.currentCost}
-            increment={upgradeMap.current.get("autoClicker01")!.incrementAdd}
+          <AdsCard
+            id="adsClicker01"
+            ads="http://easy4skip.com/lF1akz7"
+            password={[
+              "G7hK8L",
+              "P2nX5Z", // Sunday
+              "V4rM9Q",
+              "J6yT3B", // Monday
+              "L8vW7N",
+              "C1mK4R", // Tuesday
+              "Q3zY2F",
+              "D5pL6S", // Wednesday
+              "E9wV1X",
+              "H2bT7M", // Thursday
+              "R4jP8G",
+              "K6nW3C", // Friday
+              "M1xQ9F",
+              "Z7tL5J", // Saturday
+            ]}
+            name="Yeti"
+            level={upgradeMap.current.get("adsClicker01")!.level}
+            cost={upgradeMap.current.get("adsClicker01")!.currentCost}
+            increment={upgradeMap.current.get("adsClicker01")!.incrementAdd}
             balance={balanceRef.current.value}
             autoIncrementTotal={autoIncrement}
             clickHandler={(id) => {
@@ -333,12 +349,29 @@ export function Freemine() {
               );
             }}
           />
-          <UpgradeButton
-            id="autoClicker03"
-            name="Warrior"
-            level={upgradeMap.current.get("autoClicker03")!.level}
-            cost={upgradeMap.current.get("autoClicker03")!.currentCost}
-            increment={upgradeMap.current.get("autoClicker03")!.incrementAdd}
+          <AdsCard
+            id="adsClicker03"
+            ads="http://easy4skip.com/m6hPAREZ"
+            password={[
+              "N6yQ7M",
+              "W2rK3J", // Sunday
+              "B5jL9X",
+              "H4gP8R", // Monday
+              "T1vN2Z",
+              "Q8mW6C", // Tuesday
+              "D3kO5F",
+              "X7bV4J", // Wednesday
+              "P9tM1L",
+              "G6yR8N", // Thursday
+              "F2qK7Z",
+              "M4wJ5C", // Friday
+              "L8pN3X",
+              "S1gT9V", // Saturday
+            ]}
+            name="Valkyrie"
+            level={upgradeMap.current.get("adsClicker03")!.level}
+            cost={upgradeMap.current.get("adsClicker03")!.currentCost}
+            increment={upgradeMap.current.get("adsClicker03")!.incrementAdd}
             balance={balanceRef.current.value}
             autoIncrementTotal={autoIncrement}
             clickHandler={(id) => {
@@ -352,12 +385,29 @@ export function Freemine() {
               );
             }}
           />
-          <UpgradeButton
-            id="autoClicker05"
-            name="ELF"
-            level={upgradeMap.current.get("autoClicker05")!.level}
-            cost={upgradeMap.current.get("autoClicker05")!.currentCost}
-            increment={upgradeMap.current.get("autoClicker05")!.incrementAdd}
+          <AdsCard
+            id="adsClicker05"
+            ads="http://easy4skip.com/7qOXa"
+            password={[
+              "Z8tM9L",
+              "Y3rK2V", // Sunday
+              "X1pW4Q",
+              "N6yX5C", // Monday
+              "J9mL8N",
+              "Q2rO3J", // Tuesday
+              "B5vF7M",
+              "R7qK1G", // Wednesday
+              "C6wN4R",
+              "D9jT8Y", // Thursday
+              "A4bX2Z",
+              "S1pV7Q", // Friday
+              "L3nJ5C",
+              "M6kL9M", // Saturday
+            ]}
+            name="Kraken"
+            level={upgradeMap.current.get("adsClicker05")!.level}
+            cost={upgradeMap.current.get("adsClicker05")!.currentCost}
+            increment={upgradeMap.current.get("adsClicker05")!.incrementAdd}
             balance={balanceRef.current.value}
             autoIncrementTotal={autoIncrement}
             clickHandler={(id) => {
@@ -371,31 +421,29 @@ export function Freemine() {
               );
             }}
           />
-          <UpgradeButton
-            id="autoClicker07"
-            name="Wizard"
-            level={upgradeMap.current.get("autoClicker07")!.level}
-            cost={upgradeMap.current.get("autoClicker07")!.currentCost}
-            increment={upgradeMap.current.get("autoClicker07")!.incrementAdd}
-            balance={balanceRef.current.value}
-            autoIncrementTotal={autoIncrement}
-            clickHandler={(id) => {
-              upgradeInvocationHandler(
-                id,
-                upgradeMap,
-                upgradeEnergyMap,
-                balanceRef,
-                setMaxEnergy,
-                setRefillRate
-              );
-            }}
-          />
-          <UpgradeButton
-            id="autoClicker09"
-            name="Zombie"
-            level={upgradeMap.current.get("autoClicker09")!.level}
-            cost={upgradeMap.current.get("autoClicker09")!.currentCost}
-            increment={upgradeMap.current.get("autoClicker09")!.incrementAdd}
+          <AdsCard
+            id="adsClicker07"
+            ads="http://easy4skip.com/XKbWbL40"
+            password={[
+              "M9tL7R",
+              "N2rK8V", // Sunday
+              "J1pW4Q",
+              "F5yX9C", // Monday
+              "K3mL6N",
+              "P8rO1J", // Tuesday
+              "T4vF9M",
+              "H7qK2G", // Wednesday
+              "L6wN5R",
+              "C9jT3Y", // Thursday
+              "Z4bX1F",
+              "S8pV7Q", // Friday
+              "D3nJ9C",
+              "B6kL4M", // Saturday
+            ]}
+            name="Orge"
+            level={upgradeMap.current.get("adsClicker07")!.level}
+            cost={upgradeMap.current.get("adsClicker07")!.currentCost}
+            increment={upgradeMap.current.get("adsClicker07")!.incrementAdd}
             balance={balanceRef.current.value}
             autoIncrementTotal={autoIncrement}
             clickHandler={(id) => {
@@ -411,12 +459,29 @@ export function Freemine() {
           />
         </div>
         <div className=" col-6">
-          <UpgradeButton
-            id="autoClicker02"
-            name="Goblin"
-            level={upgradeMap.current.get("autoClicker02")!.level}
-            cost={upgradeMap.current.get("autoClicker02")!.currentCost}
-            increment={upgradeMap.current.get("autoClicker02")!.incrementAdd}
+          <AdsCard
+            id="adsClicker02"
+            ads="http://easy4skip.com/uvYYkTuU"
+            password={[
+              "B7xP8H",
+              "T5qN3Y", // Sunday
+              "F4rL6M",
+              "Q1vK9Z", // Monday
+              "U3wJ2X",
+              "G6tO7C", // Tuesday
+              "H2nP4V",
+              "A9yR5F", // Wednesday
+              "E8bW1L",
+              "D7sM3Q", // Thursday
+              "C5kT9J",
+              "P4gN2Y", // Friday
+              "V1mL6R",
+              "Z8jQ5X", // Saturday
+            ]}
+            name="Cyclops"
+            level={upgradeMap.current.get("adsClicker02")!.level}
+            cost={upgradeMap.current.get("adsClicker02")!.currentCost}
+            increment={upgradeMap.current.get("adsClicker02")!.incrementAdd}
             balance={balanceRef.current.value}
             autoIncrementTotal={autoIncrement}
             clickHandler={(id) => {
@@ -430,12 +495,29 @@ export function Freemine() {
               );
             }}
           />
-          <UpgradeButton
-            id="autoClicker04"
-            name="Knight"
-            level={upgradeMap.current.get("autoClicker04")!.level}
-            cost={upgradeMap.current.get("autoClicker04")!.currentCost}
-            increment={upgradeMap.current.get("autoClicker04")!.incrementAdd}
+          <AdsCard
+            id="adsClicker04"
+            ads="http://easy4skip.com/Bugz"
+            password={[
+              "J9nM8L",
+              "S4kV2Z", // Sunday
+              "R1pW3Q",
+              "E7yX5C", // Monday
+              "K6mL9N",
+              "P8rO4J", // Tuesday
+              "T3vF7M",
+              "C2qK1G", // Wednesday
+              "L5wN6R",
+              "M9jT8Y", // Thursday
+              "H4bX2Z",
+              "G1pV7Q", // Friday
+              "W3nJ5C",
+              "F6kL9M", // Saturday
+            ]}
+            name=" Chimera"
+            level={upgradeMap.current.get("adsClicker04")!.level}
+            cost={upgradeMap.current.get("adsClicker04")!.currentCost}
+            increment={upgradeMap.current.get("adsClicker04")!.incrementAdd}
             balance={balanceRef.current.value}
             autoIncrementTotal={autoIncrement}
             clickHandler={(id) => {
@@ -449,12 +531,29 @@ export function Freemine() {
               );
             }}
           />
-          <UpgradeButton
-            id="autoClicker06"
-            name="Dwarf"
-            level={upgradeMap.current.get("autoClicker06")!.level}
-            cost={upgradeMap.current.get("autoClicker06")!.currentCost}
-            increment={upgradeMap.current.get("autoClicker06")!.incrementAdd}
+          <AdsCard
+            id="adsClicker06"
+            ads="http://easy4skip.com/WFVq"
+            password={[
+              "Q7hL6M",
+              "N4rK5V", // Sunday
+              "P1pW8J",
+              "R9yX2C", // Monday
+              "T3mL7N",
+              "V6rO4J", // Tuesday
+              "W5vF9M",
+              "Y2qK1G", // Wednesday
+              "Z6wN4R",
+              "X9jT3Y", // Thursday
+              "B4bX1Z",
+              "C8pV7Q", // Friday
+              "D3nJ5C",
+              "E6kL9M", // Saturday
+            ]}
+            name=" Griffin"
+            level={upgradeMap.current.get("adsClicker06")!.level}
+            cost={upgradeMap.current.get("adsClicker06")!.currentCost}
+            increment={upgradeMap.current.get("adsClicker06")!.incrementAdd}
             balance={balanceRef.current.value}
             autoIncrementTotal={autoIncrement}
             clickHandler={(id) => {
@@ -468,31 +567,29 @@ export function Freemine() {
               );
             }}
           />
-          <UpgradeButton
-            id="autoClicker08"
-            name="Pirate"
-            level={upgradeMap.current.get("autoClicker08")!.level}
-            cost={upgradeMap.current.get("autoClicker08")!.currentCost}
-            increment={upgradeMap.current.get("autoClicker08")!.incrementAdd}
-            balance={balanceRef.current.value}
-            autoIncrementTotal={autoIncrement}
-            clickHandler={(id) => {
-              upgradeInvocationHandler(
-                id,
-                upgradeMap,
-                upgradeEnergyMap,
-                balanceRef,
-                setMaxEnergy,
-                setRefillRate
-              );
-            }}
-          />
-          <UpgradeButton
-            id="autoClicker10"
-            name="Orc"
-            level={upgradeMap.current.get("autoClicker10")!.level}
-            cost={upgradeMap.current.get("autoClicker10")!.currentCost}
-            increment={upgradeMap.current.get("autoClicker10")!.incrementAdd}
+          <AdsCard
+            id="adsClicker08"
+            ads="http://easy4skip.com/Jo4YE1Tp"
+            password={[
+              "L4tM2F",
+              "K7rK9V", // Sunday
+              "H1pW8C",
+              "N2yX5Q", // Monday
+              "M6mL7J",
+              "F9rO3N", // Tuesday
+              "J5vF1R",
+              "C8qK4G", // Wednesday
+              "T9wN6M",
+              "D2jT3Y", // Thursday
+              "X3bX5F",
+              "Z7pV1R", // Friday
+              "P2nJ4C",
+              "B9kL8M", // Saturday
+            ]}
+            name=" Fenrir"
+            level={upgradeMap.current.get("adsClicker08")!.level}
+            cost={upgradeMap.current.get("adsClicker08")!.currentCost}
+            increment={upgradeMap.current.get("adsClicker08")!.incrementAdd}
             balance={balanceRef.current.value}
             autoIncrementTotal={autoIncrement}
             clickHandler={(id) => {

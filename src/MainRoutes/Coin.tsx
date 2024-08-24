@@ -175,6 +175,15 @@ useEffect(() => {
       ["refClicker12", new UpgradeState(18000, 2, 0, 3)],
       ["refClicker13", new UpgradeState(8000, 2, 0, 2.5)],
       ["refClicker14", new UpgradeState(30000, 2, 0, 3.5)],
+      //ref card
+      ["adsClicker01", new UpgradeState(5000, 2, 0, 2)],
+      ["adsClicker02", new UpgradeState(5000, 2, 0, 2)],
+      ["adsClicker03", new UpgradeState(5000, 2, 0, 2)],
+      ["adsClicker04", new UpgradeState(5000, 2, 0, 2)],
+      ["adsClicker05", new UpgradeState(5000, 2, 0, 2)],
+      ["adsClicker06", new UpgradeState(5000, 2, 0, 2)],
+      ["adsClicker07", new UpgradeState(5000, 2, 0, 2)],
+      ["adsClicker08", new UpgradeState(5000, 2, 0, 2)],
     ])
   );
 
@@ -212,9 +221,19 @@ useEffect(() => {
         upgradeMap.current.get("refClicker11")!.increment +
         upgradeMap.current.get("refClicker12")!.increment +
         upgradeMap.current.get("refClicker13")!.increment +
-        upgradeMap.current.get("refClicker14")!.increment ) *
+        upgradeMap.current.get("refClicker14")!.increment +
+        //ads
+        upgradeMap.current.get("adsClicker01")!.increment +
+        upgradeMap.current.get("adsClicker02")!.increment +
+        upgradeMap.current.get("adsClicker03")!.increment +
+        upgradeMap.current.get("adsClicker04")!.increment +
+        upgradeMap.current.get("adsClicker05")!.increment +
+        upgradeMap.current.get("adsClicker06")!.increment +
+        upgradeMap.current.get("adsClicker07")!.increment +
+        upgradeMap.current.get("adsClicker08")!.increment) *
         100
-    ) / 100 -localTotalExchange;
+    ) /
+      100 -localTotalExchange;
 
   //downdatabase
   useEffect(() => {

@@ -2,7 +2,7 @@ import { Button, Box, Typography, Modal, Snackbar } from "@mui/material";
 import UpgradeState from "../classes/upgradeState";
 import React, { useEffect, useRef } from "react";
 import UpgradeEnergy from "../classes/upgradeEnergy";
-import { saveUserDataToFirebase } from '../firebaseFunctions'; // Import your Firebase function
+import { saveUserDataToFirebase } from "../firebaseFunctions"; // Import your Firebase function
 
 const style = {
   position: "absolute" as "absolute",
@@ -20,7 +20,7 @@ export function SaveGame(props: {
   balanceRef: React.MutableRefObject<{ value: number }>;
   upgradeMap: React.MutableRefObject<Map<string, UpgradeState>>;
   upgradeEnergyMap: React.MutableRefObject<Map<string, UpgradeEnergy>>;
-  userId: string | null  // Assuming you're passing userId as a prop
+  userId: string | null; // Assuming you're passing userId as a prop
 }) {
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
   function handleSave() {
@@ -129,6 +129,40 @@ export function SaveGame(props: {
       "RC14Level",
       JSON.stringify(props.upgradeMap.current.get("refClicker14")!.level)
     );
+    //ADS
+    localStorage.setItem(
+      "AD1Level",
+      JSON.stringify(props.upgradeMap.current.get("adsClicker01")!.level)
+    );
+    localStorage.setItem(
+      "AD2Level",
+      JSON.stringify(props.upgradeMap.current.get("adsClicker02")!.level)
+    );
+    localStorage.setItem(
+      "AD3Level",
+      JSON.stringify(props.upgradeMap.current.get("adsClicker03")!.level)
+    );
+    localStorage.setItem(
+      "AD4Level",
+      JSON.stringify(props.upgradeMap.current.get("adsClicker04")!.level)
+    );
+    localStorage.setItem(
+      "AD5Level",
+      JSON.stringify(props.upgradeMap.current.get("adsClicker05")!.level)
+    );
+    localStorage.setItem(
+      "AD6Level",
+      JSON.stringify(props.upgradeMap.current.get("adsClicker06")!.level)
+    );
+    localStorage.setItem(
+      "AD7Level",
+      JSON.stringify(props.upgradeMap.current.get("adsClicker07")!.level)
+    );
+    localStorage.setItem(
+      "AD8Level",
+      JSON.stringify(props.upgradeMap.current.get("adsClicker08")!.level)
+    );
+
     // console.log("Game saved");
     // localStorage.setItem(
     //   "pool",
@@ -144,35 +178,44 @@ export function SaveGame(props: {
     const firebaseData = {
       balance: props.balanceRef.current.value,
       upgrades: {
-        clickUpgrade: props.upgradeMap.current.get('clickUpgrade')!.level,
-        autoClicker01: props.upgradeMap.current.get('autoClicker01')!.level,
-        autoClicker02: props.upgradeMap.current.get('autoClicker02')!.level,
-        autoClicker03: props.upgradeMap.current.get('autoClicker03')!.level,
-        autoClicker04: props.upgradeMap.current.get('autoClicker04')!.level,
-        autoClicker05: props.upgradeMap.current.get('autoClicker05')!.level,
-        autoClicker06: props.upgradeMap.current.get('autoClicker06')!.level,
-        autoClicker07: props.upgradeMap.current.get('autoClicker07')!.level,
-        autoClicker08: props.upgradeMap.current.get('autoClicker08')!.level,
-        autoClicker09: props.upgradeMap.current.get('autoClicker09')!.level,
-        autoClicker10: props.upgradeMap.current.get('autoClicker10')!.level,
-        refClicker01: props.upgradeMap.current.get('refClicker01')!.level,
-        refClicker02: props.upgradeMap.current.get('refClicker02')!.level,
-        refClicker03: props.upgradeMap.current.get('refClicker03')!.level,
-        refClicker04: props.upgradeMap.current.get('refClicker04')!.level,
-        refClicker05: props.upgradeMap.current.get('refClicker05')!.level,
-        refClicker06: props.upgradeMap.current.get('refClicker06')!.level,
-        refClicker07: props.upgradeMap.current.get('refClicker07')!.level,
-        refClicker08: props.upgradeMap.current.get('refClicker08')!.level,
-        refClicker09: props.upgradeMap.current.get('refClicker09')!.level,
-        refClicker10: props.upgradeMap.current.get('refClicker10')!.level,
-        refClicker11: props.upgradeMap.current.get('refClicker11')!.level,
-        refClicker12: props.upgradeMap.current.get('refClicker12')!.level,
-        refClicker13: props.upgradeMap.current.get('refClicker13')!.level,
-        refClicker14: props.upgradeMap.current.get('refClicker14')!.level,
+        clickUpgrade: props.upgradeMap.current.get("clickUpgrade")!.level,
+        autoClicker01: props.upgradeMap.current.get("autoClicker01")!.level,
+        autoClicker02: props.upgradeMap.current.get("autoClicker02")!.level,
+        autoClicker03: props.upgradeMap.current.get("autoClicker03")!.level,
+        autoClicker04: props.upgradeMap.current.get("autoClicker04")!.level,
+        autoClicker05: props.upgradeMap.current.get("autoClicker05")!.level,
+        autoClicker06: props.upgradeMap.current.get("autoClicker06")!.level,
+        autoClicker07: props.upgradeMap.current.get("autoClicker07")!.level,
+        autoClicker08: props.upgradeMap.current.get("autoClicker08")!.level,
+        autoClicker09: props.upgradeMap.current.get("autoClicker09")!.level,
+        autoClicker10: props.upgradeMap.current.get("autoClicker10")!.level,
+        refClicker01: props.upgradeMap.current.get("refClicker01")!.level,
+        refClicker02: props.upgradeMap.current.get("refClicker02")!.level,
+        refClicker03: props.upgradeMap.current.get("refClicker03")!.level,
+        refClicker04: props.upgradeMap.current.get("refClicker04")!.level,
+        refClicker05: props.upgradeMap.current.get("refClicker05")!.level,
+        refClicker06: props.upgradeMap.current.get("refClicker06")!.level,
+        refClicker07: props.upgradeMap.current.get("refClicker07")!.level,
+        refClicker08: props.upgradeMap.current.get("refClicker08")!.level,
+        refClicker09: props.upgradeMap.current.get("refClicker09")!.level,
+        refClicker10: props.upgradeMap.current.get("refClicker10")!.level,
+        refClicker11: props.upgradeMap.current.get("refClicker11")!.level,
+        refClicker12: props.upgradeMap.current.get("refClicker12")!.level,
+        refClicker13: props.upgradeMap.current.get("refClicker13")!.level,
+        refClicker14: props.upgradeMap.current.get("refClicker14")!.level,
+        //ads
+        adsClicker01: props.upgradeMap.current.get("adsClicker01")!.level,
+        adsClicker02: props.upgradeMap.current.get("adsClicker02")!.level,
+        adsClicker03: props.upgradeMap.current.get("adsClicker03")!.level,
+        adsClicker04: props.upgradeMap.current.get("adsClicker04")!.level,
+        adsClicker05: props.upgradeMap.current.get("adsClicker05")!.level,
+        adsClicker06: props.upgradeMap.current.get("adsClicker06")!.level,
+        adsClicker07: props.upgradeMap.current.get("adsClicker07")!.level,
+        adsClicker08: props.upgradeMap.current.get("adsClicker08")!.level,
       },
       //upgradeEnergy: {
-        //energyPool: props.upgradeEnergyMap.current.get('energyPool')!.level,
-    //energyFill: props.upgradeEnergyMap.current.get('energyfill')!.level,
+      //energyPool: props.upgradeEnergyMap.current.get('energyPool')!.level,
+      //energyFill: props.upgradeEnergyMap.current.get('energyfill')!.level,
       //},
       lastUpdated: new Date().getTime(),
     };
@@ -315,6 +358,48 @@ export function SaveGame(props: {
       parseInt(JSON.parse(localStorage.getItem("RC14Level") || "0")),
       props.upgradeMap
     );
+    //ADS card
+    loadUpgrade(
+      "adsClicker01",
+      parseInt(JSON.parse(localStorage.getItem("AD1Level") || "0")),
+      props.upgradeMap
+    );
+    loadUpgrade(
+      "adsClicker02",
+      parseInt(JSON.parse(localStorage.getItem("AD2Level") || "0")),
+      props.upgradeMap
+    );
+    loadUpgrade(
+      "adsClicker03",
+      parseInt(JSON.parse(localStorage.getItem("AD3Level") || "0")),
+      props.upgradeMap
+    );
+    loadUpgrade(
+      "adsClicker04",
+      parseInt(JSON.parse(localStorage.getItem("AD4Level") || "0")),
+      props.upgradeMap
+    );
+    loadUpgrade(
+      "adsClicker05",
+      parseInt(JSON.parse(localStorage.getItem("AD5Level") || "0")),
+      props.upgradeMap
+    );
+    loadUpgrade(
+      "adsClicker06",
+      parseInt(JSON.parse(localStorage.getItem("AD6Level") || "0")),
+      props.upgradeMap
+    );
+    loadUpgrade(
+      "adsClicker07",
+      parseInt(JSON.parse(localStorage.getItem("AD7Level") || "0")),
+      props.upgradeMap
+    );
+    loadUpgrade(
+      "adsClicker08",
+      parseInt(JSON.parse(localStorage.getItem("AD8Level") || "0")),
+      props.upgradeMap
+    );
+
     // console.log("Game loaded");
     loadUpgradeEnergy(
       "energyPool",
