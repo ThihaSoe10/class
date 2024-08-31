@@ -1,4 +1,4 @@
-import { Button, Box, Typography, Modal } from "@mui/material";
+import { Button, Box, Typography, Modal, Snackbar } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import { ref, onValue, get, runTransaction } from "firebase/database";
 import { getDatabase } from "firebase/database";
@@ -15,8 +15,8 @@ const style = {
   border: "1px solid rgb(141, 130, 114)",
   boxShadow: 24,
   p: 3,
-  color: "black",
-  borderRadius: "8px",
+  color: "black", // Text color set to black
+  borderRadius: "8px", // Border radius set to 8px
 };
 
 interface ExchangeProps {
@@ -25,35 +25,27 @@ interface ExchangeProps {
 
 const Transfer: React.FC<ExchangeProps> = ({ userId }) => {
   const [inputValue, setInputValue] = useState<number>(0);
+  //const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<boolean>(false);
   const [receiverId, setReceiverId] = useState<string | null>(null);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [open, setOpen] = useState(false);
   const [totalTokens, setTotalTokens] = useState<number>(0);
-  const [congratulationOpen, setCongratulationOpen] = useState(false);
+  const [congratulationOpen, setCongratulationOpen] = useState(false); // New state for congratulatory modal
   const [transferTimestamp, setTransferTimestamp] = useState<string>("");
   const [tempInputValue, setTempInputValue] = useState<number>(0);
   const [tempReceiverId, setTempReceiverId] = useState<string | null>(null);
-  const [hasPassedAirdrop, setHasPassedAirdrop] = useState<boolean>(false);
 
   useEffect(() => {
     if (userId) {
       const exchangeRef = ref(db, `users/${userId}/exchanges/tokens`);
+
       const unsubscribe = onValue(exchangeRef, (snapshot) => {
         const tokens = snapshot.val();
         setTotalTokens(tokens || 0);
       });
-      return () => unsubscribe();
-    }
-  }, [userId]);
 
-  useEffect(() => {
-    if (userId) {
-      const airdropRef = ref(db, `users/${userId}/airdropStatus`);
-      onValue(airdropRef, (snapshot) => {
-        const status = snapshot.val();
-        setHasPassedAirdrop(status || false);
-      });
+      return () => unsubscribe();
     }
   }, [userId]);
 
@@ -67,7 +59,7 @@ const Transfer: React.FC<ExchangeProps> = ({ userId }) => {
 
   const handleReceiverIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setReceiverId(e.target.value);
-    setErrorMessage("");
+    setErrorMessage(""); // Clear the error message when the input changes
   };
 
   const handleOpen = () => {
@@ -81,6 +73,7 @@ const Transfer: React.FC<ExchangeProps> = ({ userId }) => {
       return;
     }
 
+    // Check if the sender's ID is the same as the receiver's ID
     if (receiverId === userId) {
       setErrorMessage("You cannot transfer tokens to your own account.");
       return;
@@ -99,7 +92,8 @@ const Transfer: React.FC<ExchangeProps> = ({ userId }) => {
   };
 
   const handleClose = () => setOpen(false);
-  const handleCongratulationClose = () => setCongratulationOpen(false);
+
+  const handleCongratulationClose = () => setCongratulationOpen(false); // Close congratulatory modal
 
   const ConfirmTransfer = () => {
     if (!userId || !receiverId) return;
@@ -107,6 +101,7 @@ const Transfer: React.FC<ExchangeProps> = ({ userId }) => {
     const senderRef = ref(db, `users/${userId}/exchanges/tokens`);
     const receiverRef = ref(db, `users/${receiverId}/exchanges/tokens`);
 
+    // Use runTransaction to ensure atomic updates
     runTransaction(senderRef, (currentTokens) => {
       if (currentTokens === null || currentTokens < inputValue) {
         setErrorMessage("Insufficient tokens.");
@@ -120,19 +115,22 @@ const Transfer: React.FC<ExchangeProps> = ({ userId }) => {
           return (currentTokens || 0) + inputValue;
         })
           .then(() => {
+            // Capture the current date and time for the transfer timestamp
             const currentDate = new Date();
             const formattedDate = `${currentDate.getUTCFullYear()}/${
               currentDate.getUTCMonth() + 1
             }/${currentDate.getUTCDate()} UTC:${currentDate.getUTCHours()}:${currentDate.getUTCMinutes()}`;
             setTransferTimestamp(formattedDate);
 
+            // Store values in temporary states before resetting
             setTempInputValue(inputValue);
             setTempReceiverId(receiverId);
 
             setSuccess(true);
             setOpen(false);
-            setCongratulationOpen(true);
+            setCongratulationOpen(true); // Open the congratulations modal
 
+            // Reset input value and receiver ID
             setInputValue(0);
             setReceiverId(null);
             setErrorMessage("");
@@ -146,6 +144,8 @@ const Transfer: React.FC<ExchangeProps> = ({ userId }) => {
       });
   };
 
+  //
+  //D4-02down is for visible
   const [clickUpgradeLevel, setClickUpgradeLevel] = useState<number>(0);
   const [upgradeLevels, setUpgradeLevels] = useState<number[]>([]);
 
@@ -160,7 +160,7 @@ const Transfer: React.FC<ExchangeProps> = ({ userId }) => {
       });
     }
   }, [userId]);
-
+  ////////
   useEffect(() => {
     if (userId) {
       const db = getDatabase();
@@ -207,17 +207,7 @@ const Transfer: React.FC<ExchangeProps> = ({ userId }) => {
       <div className="tokenbalance">
         <h3>Token~{totalTokens}</h3>
       </div>
-
-      {!hasPassedAirdrop && (
-        <div className="update-prompt">
-          <p>
-            To exchange MYG tokens, you must level up Tab Booster level 19 and
-            18 Cards to level 5.
-          </p>
-        </div>
-      )}
-
-      {clickUpgradeLevel > 18 && totalValue > 17 && hasPassedAirdrop && (
+      {clickUpgradeLevel > 18 && totalValue > 17 && (
         <form onSubmit={(e) => e.preventDefault()} className="transferForm">
           <h5>Enter Receiver ID</h5>
           <input
@@ -252,9 +242,7 @@ const Transfer: React.FC<ExchangeProps> = ({ userId }) => {
           </button>
         </form>
       )}
-
       {errorMessage && <p className="error-message">{errorMessage}</p>}
-
       <Modal
         open={open}
         onClose={handleClose}
@@ -290,6 +278,8 @@ const Transfer: React.FC<ExchangeProps> = ({ userId }) => {
         </Box>
       </Modal>
 
+      {/* New Congratulatory Modal */}
+      {/* New Congratulatory Modal */}
       <Modal
         open={congratulationOpen}
         onClose={handleCongratulationClose}
@@ -317,7 +307,7 @@ const Transfer: React.FC<ExchangeProps> = ({ userId }) => {
                 You have successfully sent {tempInputValue} tokens to{" "}
                 {tempReceiverId}.
               </p>
-              <p>{transferTimestamp}</p>
+              <p> {transferTimestamp}</p>
             </div>
             <hr />
           </Typography>
