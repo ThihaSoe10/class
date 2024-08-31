@@ -102,13 +102,13 @@ interface ExchangeProps {
   userId: string | null; // Add userId prop to identify the user in Firebase
 }
 
-//D4-01dow is for exchange mechasim
+//D4-01dow is for exchange mechanism
 const Swap: React.FC<ExchangeProps> = ({ autoIncrement, userId }) => {
   const [inputValue, setInputValue] = useState<number>(0); // Start with 0
   const [error, setError] = useState<string | null>(null); // State for error message
   const [success, setSuccess] = useState<boolean>(false); // State for success feedback
 
-  const exchangeRate = 10000;
+  const exchangeRate = 15000;
   const maxExchangeValue = Math.floor(autoIncrement * 3600);
 
   const isClickable = inputValue > 0 && inputValue <= autoIncrement * 3600;
@@ -248,11 +248,20 @@ const Swap: React.FC<ExchangeProps> = ({ autoIncrement, userId }) => {
   return (
     <div className="swap">
       <div className="swapbalance">{Math.floor(autoIncrement * 3600)} /h</div>
-      <h4>{exchangeRate}Profit/h ~ 1 Token</h4>
+      <h4>{exchangeRate} Profit/h ~ 1 Token</h4>
       <h4>Tokens ~ {totalTokens}</h4>
       <p>
         {totalTokens} * 0.5 ~ {inusdt} usdt
       </p>
+
+      {/* Show a message if the user has not passed the airdrop */}
+      {clickUpgradeLevel <= 18 && totalValue <= 18 && (
+        <p className="update-message">
+          To exchange MYG tokens, you must level up Tab Booster level 19 and 18
+          Cards to level 5.
+        </p>
+      )}
+
       {clickUpgradeLevel > 18 && totalValue > 18 && (
         <div className="exchange">
           <div className="exbox1">
