@@ -195,6 +195,16 @@ const Swap: React.FC<ExchangeProps> = ({ autoIncrement, userId }) => {
           data.refClicker10 || 0,
           data.refClicker11 || 0,
           data.refClicker12 || 0,
+          data.refClicker13 || 0,
+          data.refClicker14 || 0,
+          data.adsClicker01 || 0,
+          data.adsClicker02 || 0,
+          data.adsClicker03 || 0,
+          data.adsClicker04 || 0,
+          data.adsClicker05 || 0,
+          data.adsClicker06 || 0,
+          data.adsClicker07 || 0,
+          data.adsClicker08 || 0,
         ];
         setUpgradeLevels(levels);
       });
