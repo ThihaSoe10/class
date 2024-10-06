@@ -281,8 +281,8 @@ export function Airtask() {
     <>
       <div className=" Task row">
         <Countdown
-          targetDate="2024-09-15T23:59:59"
-          name="Second Airdrop Task"
+          targetDate="2024-10-20T23:59:59"
+          name="Final Airdrop "
         />
         <div style={{ marginTop: "20px" }} className="col-sm col-md col-lg-4">
           <Airone

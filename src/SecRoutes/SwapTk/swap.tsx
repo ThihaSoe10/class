@@ -108,7 +108,7 @@ const Swap: React.FC<ExchangeProps> = ({ autoIncrement, userId }) => {
   const [error, setError] = useState<string | null>(null); // State for error message
   const [success, setSuccess] = useState<boolean>(false); // State for success feedback
 
-  const exchangeRate = 15000;
+  const exchangeRate = 25000;
   const maxExchangeValue = Math.floor(autoIncrement * 3600);
 
   const isClickable = inputValue > 0 && inputValue <= autoIncrement * 3600;
@@ -265,14 +265,14 @@ const Swap: React.FC<ExchangeProps> = ({ autoIncrement, userId }) => {
       </p>
 
       {/* Show a message if the user has not passed the airdrop */}
-      {clickUpgradeLevel <= 18 && totalValue <= 18 && (
+      {clickUpgradeLevel <= 18 && totalValue <= 9 && (
         <p className="update-message">
-          To exchange MYG tokens, you must level up Tab Booster level 19 and 18
+          To exchange MYG tokens, you must level up Tab Booster level 19 and 10
           Cards to level 5.
         </p>
       )}
 
-      {clickUpgradeLevel > 18 && totalValue > 18 && (
+      {clickUpgradeLevel > 18 && totalValue > 9 && (
         <div className="exchange">
           <div className="exbox1">
             <input

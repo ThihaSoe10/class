@@ -191,6 +191,16 @@ const Transfer: React.FC<ExchangeProps> = ({ userId }) => {
           data.refClicker10 || 0,
           data.refClicker11 || 0,
           data.refClicker12 || 0,
+          data.refClicker13 || 0,
+          data.refClicker14 || 0,
+          data.adsClicker01 || 0,
+          data.adsClicker02 || 0,
+          data.adsClicker03 || 0,
+          data.adsClicker04 || 0,
+          data.adsClicker05 || 0,
+          data.adsClicker06 || 0,
+          data.adsClicker07 || 0,
+          data.adsClicker08 || 0,
         ];
         setUpgradeLevels(levels);
       });
@@ -207,7 +217,7 @@ const Transfer: React.FC<ExchangeProps> = ({ userId }) => {
       <div className="tokenbalance">
         <h3>Token~{totalTokens}</h3>
       </div>
-      {clickUpgradeLevel > 18 && totalValue > 17 && (
+      {clickUpgradeLevel > 18 && totalValue > 9 && (
         <form onSubmit={(e) => e.preventDefault()} className="transferForm">
           <h5>Enter Receiver ID</h5>
           <input

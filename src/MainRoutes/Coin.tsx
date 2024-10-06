@@ -9,9 +9,12 @@ import { SaveGame } from "../components/saveGame";
 //for booster
 import UpgradeClick from "../components/click/upgradeClick";
 //firebase
-import { sendUserDataToFirebase,updateUserAutoIncrementInFirebase} from '../firebaseFunctions';
+import {
+  sendUserDataToFirebase,
+  updateUserAutoIncrementInFirebase,
+} from "../firebaseFunctions";
 import { ref, onValue } from "firebase/database";
-import { db } from '../firebase';
+import { db } from "../firebase";
 //countdown
 import Countdown from "../components/countdown";
 import banner from "../assets/banner1.png";
@@ -26,8 +29,8 @@ export function Coin() {
   const [lastUpdated, setLastUpdated] = useState(Date.now());
   //user
   const [userId, setUserId] = useState<string | null>(null);
-//D4
-const [localTotalExchange, setLocalTotalExchange] = useState<number>(0); // Local version of totalExchange
+  //D4
+  const [localTotalExchange, setLocalTotalExchange] = useState<number>(0); // Local version of totalExchange
   const [isInitialLoad, setIsInitialLoad] = useState(true); // Flag to check if initial load is done
 
   // Load state from localStorage on mount For energy and autoincrement on window close
@@ -40,7 +43,7 @@ const [localTotalExchange, setLocalTotalExchange] = useState<number>(0); // Loca
     const storedBalance = localStorage.getItem("balance");
     const storedAutoIncrement = localStorage.getItem("autoIncrement");
     //D4
-const storedLocalTotalExchange = localStorage.getItem('localTotalExchange'); // Load local totalExchange
+    const storedLocalTotalExchange = localStorage.getItem("localTotalExchange"); // Load local totalExchange
 
     if (
       storedEnergy &&
@@ -77,9 +80,9 @@ const storedLocalTotalExchange = localStorage.getItem('localTotalExchange'); // 
         );
       balanceRef.current.value = Math.round(calculatedBalance * 100) / 100;
       //D4
-if (storedLocalTotalExchange) {
-  setLocalTotalExchange(parseFloat(storedLocalTotalExchange));
-}
+      if (storedLocalTotalExchange) {
+        setLocalTotalExchange(parseFloat(storedLocalTotalExchange));
+      }
     }
     setIsInitialLoad(false); // Set initial load flag to false after loading from localStorage
   }, []);
@@ -95,9 +98,16 @@ if (storedLocalTotalExchange) {
       localStorage.setItem("balance", balanceRef.current.value.toString());
       localStorage.setItem("autoIncrement", autoIncrement.toString());
       //D4
-localStorage.setItem('localTotalExchange', localTotalExchange.toString());
+      localStorage.setItem("localTotalExchange", localTotalExchange.toString());
     }
-  }, [energy, maxEnergy, refillRate, lastUpdated, isInitialLoad,localTotalExchange]);
+  }, [
+    energy,
+    maxEnergy,
+    refillRate,
+    lastUpdated,
+    isInitialLoad,
+    localTotalExchange,
+  ]);
   useEffect(() => {
     // Initialize the Telegram Web App SDK
     const initTelegram = () => {
@@ -131,20 +141,20 @@ localStorage.setItem('localTotalExchange', localTotalExchange.toString());
 
   //up is user
   //D4
-useEffect(() => {
-  if (userId) {
-    const exchangeRef = ref(db, `users/${userId}/exchanges/amount`);
+  useEffect(() => {
+    if (userId) {
+      const exchangeRef = ref(db, `users/${userId}/exchanges/amount`);
 
-    const unsubscribe = onValue(exchangeRef, (snapshot) => {
-      const amount = snapshot.val();
-      setLocalTotalExchange((amount || 0) / 3600);
-      //alert(`Exchange amount updated: ${amount}`);
-    });
+      const unsubscribe = onValue(exchangeRef, (snapshot) => {
+        const amount = snapshot.val();
+        setLocalTotalExchange((amount || 0) / 3600);
+        //alert(`Exchange amount updated: ${amount}`);
+      });
 
-    // Cleanup the subscription on unmount
-    return () => unsubscribe();
-  }
-}, [userId]);
+      // Cleanup the subscription on unmount
+      return () => unsubscribe();
+    }
+  }, [userId]);
 
   //routuerchange1
   const upgradeMap = useRef(
@@ -233,7 +243,8 @@ useEffect(() => {
         upgradeMap.current.get("adsClicker08")!.increment) *
         100
     ) /
-      100 -localTotalExchange;
+      100 -
+    localTotalExchange;
 
   //downdatabase
   useEffect(() => {
@@ -296,7 +307,7 @@ useEffect(() => {
           className="container-fluid"
           style={{ paddingLeft: "0", paddingRight: "0" }}
         >
-          <Countdown targetDate="2024-10-31T23:59:59" name="Airdrop" />
+          <Countdown targetDate="2024-10-20T23:59:59" name="Airdrop" />
 
           <a href="https://opensea.io/collection/mythical-gladiator">
             <img
