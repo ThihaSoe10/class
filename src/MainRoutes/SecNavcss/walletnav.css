@@ -1,41 +1,65 @@
+
 .wallet_nav {
-    position: absolute;
-    top: 3rem;
+  position: absolute;
+  top: 4rem;
+}
+
+/* for connect wallet adress */
+.connectwalletnav{
+/* text-align: right; */
+position: absolute;
+padding-top: 0.8rem;
+right: 10px;
   }
-  
-  .wallet_nav ul {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    height: 40px;
-    margin: 0;
-    padding: 0;
-    min-width: 200px;
-    border-bottom: 2px solid white;
+
+  .walletconnect,.walletaddress{
+    padding: 5px 10px;
+    border-radius: 5px;
   }
-  
-  .minelink {
-    width: 99%;
-    height: 99%;
-    text-decoration: none;
-    color: #fff;
-  }
-  
-  .wallet_nav ul li {
-    list-style: none;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  .walletconnect{
+    background-color: rgba(129, 71, 229, 0.8);
     font-weight: 400;
-    font-size: 20px;
+    font-size: 18px;
   }
-  
-  .minelink.active {
-    border-bottom: 1px solid #fbff00;
-    letter-spacing: 2px;
-    color: gold;
+  .walletaddress{
+    background-color: rgba(129, 71, 229, 0.2);
+    font-size: 15px;
   }
-  
-  
+/*  */
+
+.wallet_nav ul {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 40px;
+  margin: 0;
+  padding: 0;
+  min-width: 200px;
+  border-bottom: 2px solid white;
+}
+
+.minelink {
+  width: 99%;
+  height: 99%;
+  text-decoration: none;
+  color: #fff;
+}
+
+.wallet_nav ul li {
+  list-style: none;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 400;
+  font-size: 20px;
+}
+
+.minelink.active {
+  border-bottom: 1px solid #fbff00;
+  letter-spacing: 2px;
+  color: gold;
+}
+
+

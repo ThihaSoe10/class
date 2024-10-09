@@ -160,7 +160,7 @@ const Airtwo: React.FC<AirtwoProps> = ({
     <div className="task-box">
       <span className="taskspan">
         <p className="taskp">
-          <span>Upgrade 18 Cards to Lv5 (100k)</span>
+          <span>Upgrade 10 Cards to Lv5 (100k)</span>
           <span>{renderButton()}</span>
         </p>
       </span>
