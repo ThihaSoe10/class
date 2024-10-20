@@ -6,7 +6,7 @@ export function Nav() {
   return (
     <nav className="Route_nav">
       <ul>
-        <NavLink
+        {/* <NavLink
           to="/"
           className={({ isActive }) => (isActive ? "link active" : "link")}
         >
@@ -72,7 +72,7 @@ export function Nav() {
               <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 3h-3A2.5 2.5 0 0 1 4 1.5v-1zM9.854 9.646a.5.5 0 0 1 0 .708l-2.5 2.5a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 1 1 .708-.708L7 11.293l2.146-2.147a.5.5 0 0 1 .708 0z" />
             </svg>
           </li>
-        </NavLink>
+        </NavLink> */}
         <NavLink
           to="/wallet"
           className={({ isActive }) => (isActive ? "link active" : "link")}
