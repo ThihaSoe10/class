@@ -823,10 +823,10 @@ export function App() {
       <Router>
         <Nav />
         <Routes>
-          {/* <Route path="/" element={<Coin />} />
+          <Route path="/" element={<Coin />} />
           <Route path="/mine/*" element={<Mine />} />
           <Route path="/friend" element={<Friend />} />
-          <Route path="/tasksec/*" element={<Tasksec />} /> */}
+          <Route path="/tasksec/*" element={<Tasksec />} />
           <Route path="/wallet/*" element={<Wallet />} />
           <Route path="/connect" element={<Connect />} />
         </Routes>
