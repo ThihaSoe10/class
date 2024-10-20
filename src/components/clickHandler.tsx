@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import logo from "../assets/click.png";
+import logo from "../assets/MYG Token.png";
 
 export function ClickHandler(props: {
   balanceRef: React.MutableRefObject<{ value: number }>;
